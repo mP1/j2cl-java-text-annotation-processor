@@ -66,7 +66,7 @@ abstract class LocaleProviderTool {
     final IndentingPrinter printer;
 
     final static CharSequence type(final Class<?> type) {
-        return type.getSimpleName();
+        return type.getName();
     }
 
     final static CharSequence quote(final char value) {
