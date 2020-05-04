@@ -8,7 +8,19 @@
 
 # j2cl java-text-annotation-processor
 
-An annotation processor that generates several provides used by the emulated `java.text.DateFormatSymbols` and `java.text.DecimalFormatSymbols` in [j2cl-java-text](https://travis-ci.com/mP1/j2cl-java-text)]
+Contains several annotation processor that each generate a provider for a JRE class. All processors only generate
+for the selected Locales.
+
+- [DateFormatSymbolsProviderAnnotationProcessor](https://github.com/mP1/j2cl-java-text-annotation-processor/blob/master/src/main/java/walkingkooka/j2cl/java/text/annotationprocessor/DateFormatSymbolsProviderAnnotationProcessor.java)
+  generates a `DateFormatSymbolsProvider` used by
+  [DateFormatSymbols](https://github.com/mP1/j2cl-java-text/blob/master/src/main/java/walkingkooka/j2cl/java/text/DateFormatSymbols.java). Holds all selected symbol data.
+- [DecimalFormatProviderAnnotationProcessor](https://github.com/mP1/j2cl-java-text-annotation-processor/blob/master/src/main/java/walkingkooka/j2cl/java/text/annotationprocessor/DecimalFormatProviderAnnotationProcessor.java)
+  generates a `DeciamlFormatProvider` used by
+  [DecimalFormat](https://github.com/mP1/j2cl-java-text/blob/master/src/main/java/walkingkooka/j2cl/java/text/DecimalFormat.java). Holds patterns and other format data like decimal separator etc. 
+- [DecimalFormatSymbolsProviderAnnotationProcessor](https://github.com/mP1/j2cl-java-text-annotation-processor/blob/master/src/main/java/walkingkooka/j2cl/java/text/annotationprocessor/DecimalFormatSymbolsProviderAnnotationProcessor.java)
+  generates a `DecimalFormatSymbolsProvider` used by
+  [DecimalFormatSymbols](https://github.com/mP1/j2cl-java-text/blob/master/src/main/java/walkingkooka/j2cl/java/text/DecimalFormatSymbols.java). Holds all selected symbol data. 
+
 
 To select which locales are included set the `walkingkooka.j2cl.java.util.Locale` annotation processor argument.
 
