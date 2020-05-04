@@ -31,7 +31,7 @@ public final class DecimalFormatProviderAnnotationProcessor extends LocaleAwareA
 
     @Override
     protected String placeholder() {
-        return "$ALL";
+        return "$REGISTER_METHOD";
     }
 
     @Override

@@ -31,7 +31,7 @@ public final class DateFormatSymbolsProviderAnnotationProcessor extends LocaleAw
 
     @Override
     protected String placeholder() {
-        return "$ALL";
+        return "$REGISTER_METHOD";
     }
 
     @Override

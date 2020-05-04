@@ -31,7 +31,7 @@ public final class DecimalFormatSymbolsProviderAnnotationProcessor extends Local
 
     @Override
     protected String placeholder() {
-        return "$ALL";
+        return "$REGISTER_METHOD";
     }
 
     @Override

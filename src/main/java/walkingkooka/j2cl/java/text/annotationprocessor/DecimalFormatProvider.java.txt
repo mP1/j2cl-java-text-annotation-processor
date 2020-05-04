@@ -25,7 +25,11 @@ final class DecimalFormatProvider {
     final static int PARSE_INTEGER_ONLY = 1;
     final static int PARSE_BIG_DECIMAL = 2;
 
-$ALL
+  public final static String ANNOTATION_PROCESSOR_LOCALES_FILTER = $FILTERED_LOCALES;
+
+  public final static String SELECTED_LOCALES = $SELECTED_LOCALES;
+
+$REGISTER_METHOD
 
    private DecimalFormatProvider(final String languageTags,
                                         
