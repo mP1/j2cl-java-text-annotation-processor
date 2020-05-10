@@ -21,14 +21,16 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.j2cl.java.io.string.StringDataInputDataOutput;
 import walkingkooka.j2cl.locale.WalkingkookaLanguageTag;
-import walkingkooka.text.Indentation;
-import walkingkooka.text.LineEnding;
+import walkingkooka.j2cl.locale.annotationprocessor.LocaleAwareAnnotationProcessor;
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.Printer;
 import walkingkooka.text.printer.Printers;
 
-import java.math.RoundingMode;
+import java.io.DataOutput;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.List;
@@ -41,29 +43,33 @@ import java.util.stream.Collectors;
 /**
  * This tool prints a generated method to a {@link String} for inclusion in <code>DecimalFormatProvider.java.txt</code>
  */
-public final class DecimalFormatProviderTool extends LocaleProviderTool {
+public final class DecimalFormatProviderTool {
 
-    public static void main(final String[] args) {
-        final IndentingPrinter printer = Printers.sysOut().indenting(Indentation.with("  "));
-        new DecimalFormatProviderTool(printer).print(WalkingkookaLanguageTag.all("EN-AU"));
-        printer.flush();
-    }
-
-    static String generateMethod(final Set<String> languageTags) {
-        final StringBuilder output = new StringBuilder();
-        try (final Printer printer = Printers.stringBuilder(output, LineEnding.SYSTEM)) {
-            new DecimalFormatProviderTool(printer.indenting(Indentation.with("  "))).print(languageTags);
+    public static void main(final String[] args) throws IOException {
+        try (final Printer printer = Printers.sysOut()) {
+            final StringBuilder data = new StringBuilder();
+            generate(WalkingkookaLanguageTag.all("*"),
+                    StringDataInputDataOutput.output(data::append),
+                    LocaleAwareAnnotationProcessor.comments(printer));
+            printer.print(CharSequences.quoteAndEscape(data));
+            printer.flush();
         }
-
-        return output.toString();
     }
 
-    private DecimalFormatProviderTool(final IndentingPrinter printer) {
-        super(printer);
+    static void generate(final Set<String> languageTags,
+                         final DataOutput data,
+                         final IndentingPrinter comments) throws IOException {
+        new DecimalFormatProviderTool(data, comments).generate0(languageTags);
     }
 
-    @Override
-    void print0(final Set<String> languageTags) {
+    private DecimalFormatProviderTool(final DataOutput data,
+                                      final IndentingPrinter comments) {
+        super();
+        this.data = data;
+        this.comments = comments;
+    }
+
+    private void generate0(final Set<String> languageTags) throws IOException {
         final Map<List<DecimalFormat>, Set<String>> formatsToLanguageTags = Maps.sorted(DecimalFormatProviderTool::comparator);
 
         for (final String languageTag : languageTags) {
@@ -86,36 +92,33 @@ public final class DecimalFormatProviderTool extends LocaleProviderTool {
         }
 
         final Map<String, List<DecimalFormat>> languageTagToFormats = Maps.sorted();
-        for(final Entry<List<DecimalFormat>, Set<String>> formatAndlanguageTags : formatsToLanguageTags.entrySet()) {
+        for (final Entry<List<DecimalFormat>, Set<String>> formatAndlanguageTags : formatsToLanguageTags.entrySet()) {
             languageTagToFormats.put(formatAndlanguageTags.getValue().iterator().next(), formatAndlanguageTags.getKey());
         }
 
-        this.line("static void register(final java.util.function.Consumer<DecimalFormatProvider> registry) {");
-        this.indent();
-        {
-            for (final List<DecimalFormat> formats : languageTagToFormats.values()) {
-                final Set<String> formatLanguageTags = formatsToLanguageTags.get(formats);
+        final DataOutput data = this.data;
+        final IndentingPrinter comments = this.comments;
+        data.writeInt(languageTagToFormats.size());
 
-                this.line("registry.accept( new DecimalFormatProvider(");
-                this.indent();
-                {
-                    this.line(tabbed(formatLanguageTags) + ", // locales");
+        for (final List<DecimalFormat> formats : languageTagToFormats.values()) {
+            final Set<String> formatLanguageTags = formatsToLanguageTags.get(formats);
+            {
+                comments.print("locales=" + formatLanguageTags.stream().collect(Collectors.joining(",")));
+                comments.lineStart();
+                comments.print(comments.lineEnding());
 
-                    this.line(formats.get(0), "Currency", false);
-                    this.line(formats.get(1), "Instance", false);
-                    this.line(formats.get(2), "Integer", false);
-                    this.line(formats.get(3), "Number", false);
-                    this.line(formats.get(4), "Percent", true);
+                data.writeInt(formatLanguageTags.size());
+                for (final String formatLanguageTag : formatLanguageTags) {
+                    data.writeUTF(formatLanguageTag);
                 }
-                this.outdent();
 
-                this.line("));");
-
-                this.emptyLine();
+                generateDecimalFormat(formats.get(0), "Currency");
+                generateDecimalFormat(formats.get(1), "Instance");
+                generateDecimalFormat(formats.get(2), "Integer");
+                generateDecimalFormat(formats.get(3), "Number");
+                generateDecimalFormat(formats.get(4), "Percent");
             }
         }
-        this.outdent();
-        this.line("}");
     }
 
     private static int comparator(final List<DecimalFormat> left,
@@ -150,10 +153,9 @@ public final class DecimalFormatProviderTool extends LocaleProviderTool {
                 .build();
     }
 
-    private void line(final DecimalFormat format,
-                      final String type,
-                      final boolean last) {
-        int parse = 0;
+    private void generateDecimalFormat(final DecimalFormat format,
+                                       final String type) throws IOException {
+        int parse = PARSE_NONE;
         if (format.isParseIntegerOnly()) {
             parse |= PARSE_INTEGER_ONLY;
         }
@@ -161,37 +163,51 @@ public final class DecimalFormatProviderTool extends LocaleProviderTool {
             parse |= PARSE_BIG_DECIMAL;
         }
 
-        this.line(format.isDecimalSeparatorAlwaysShown(), type, "decimalSeparatorAlwaysShown");
-        this.line(format.getGroupingSize(), type, "groupingSize");
-        this.line(format.isGroupingUsed(), type, "groupingUsed");
-        this.line(format.getMaximumFractionDigits(), type, "maximumFractionDigits");
-        this.line(format.getMinimumFractionDigits(), type, "minimumFractionDigits");
-        this.line(format.getMaximumIntegerDigits(), type, "maximumIntegerDigits");
-        this.line(format.getMinimumIntegerDigits(), type, "minimumIntegerDigits");
-        this.line(format.getMultiplier(), type, "multiplier");
-        this.line(format.getNegativePrefix(), type, "negativePrefix");
-        this.line(format.getNegativeSuffix(), type, "negativeSuffix");
-        this.line(parse, type, "parse");
-        this.line(format.toPattern(), type, "pattern");
-        this.line(format.getPositivePrefix(), type, "positivePrefix");
-        this.line(format.getPositiveSuffix(), type, "positiveSuffix");
+        this.field(format.isDecimalSeparatorAlwaysShown(), type, "decimalSeparatorAlwaysShown");
+        this.field(format.getGroupingSize(), type, "groupingSize");
+        this.field(format.isGroupingUsed(), type, "groupingUsed");
+        this.field(format.getMaximumFractionDigits(), type, "maximumFractionDigits");
+        this.field(format.getMinimumFractionDigits(), type, "minimumFractionDigits");
+        this.field(format.getMaximumIntegerDigits(), type, "maximumIntegerDigits");
+        this.field(format.getMinimumIntegerDigits(), type, "minimumIntegerDigits");
+        this.field(format.getMultiplier(), type, "multiplier");
+        this.field(format.getNegativePrefix(), type, "negativePrefix");
+        this.field(format.getNegativeSuffix(), type, "negativeSuffix");
+        this.field(parse, type, "parse");
+        this.field(format.toPattern(), type, "pattern");
+        this.field(format.getPositivePrefix(), type, "positivePrefix");
+        this.field(format.getPositiveSuffix(), type, "positiveSuffix");
+        this.field(format.getRoundingMode().name(), type, "roundingMode");
 
-        this.line(type(RoundingMode.class) + "." + format.getRoundingMode().name() + (last ? "": ",") + " // " + type + " roundingMode"); // dont want the trailing comma
+        this.comments.lineStart();
+        this.comments.print(this.comments.lineEnding());
     }
 
     final static int PARSE_NONE = 0;
     final static int PARSE_INTEGER_ONLY = 1;
     final static int PARSE_BIG_DECIMAL = 2;
 
-    private void line(final boolean value, final String type, final String property) {
-        this.line(value + ", // " + type + " " + property);
+    private void field(final boolean value, final String type, final String property) throws IOException {
+        this.comments.lineStart();
+        this.comments.print(type + " " + property + "=" + value);
+
+        this.data.writeBoolean(value);
     }
 
-    private void line(final int value, final String type, final String property) {
-        this.line(value + ", // " + type + " " + property);
+    private void field(final int value, final String type, final String property) throws IOException {
+        this.comments.lineStart();
+        this.comments.print(type + " " + property + "=" + value);
+
+        this.data.writeInt(value);
     }
 
-    private void line(final String value, final String type, final String property) {
-        this.line(quote(value) + ", // " + type + " " + property);
+    private void field(final String value, final String type, final String property) throws IOException {
+        this.comments.lineStart();
+        this.comments.print(type + " " + property + "=" + value);
+
+        this.data.writeUTF(value);
     }
+
+    private final DataOutput data;
+    private final IndentingPrinter comments;
 }

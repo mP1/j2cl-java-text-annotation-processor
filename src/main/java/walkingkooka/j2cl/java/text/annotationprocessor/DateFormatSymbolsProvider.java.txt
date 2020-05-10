@@ -23,30 +23,7 @@ final class DateFormatSymbolsProvider {
 
   public final static String SELECTED_LOCALES = $SELECTED_LOCALES;
 
-$REGISTER_METHOD
+$DATA_COMMENT
 
-   private DateFormatSymbolsProvider(final String locales,
-                                     final String ampms,
-                                     final String eras,
-                                     final String months,
-                                     final String shortMonths,
-                                     final String shortWeekdays,
-                                     final String weekdays) {
-        super();
-        this.locales = locales;
-        this.ampms = ampms;
-        this.eras = eras;
-        this.months = months;
-        this.shortMonths = shortMonths;
-        this.shortWeekdays = shortWeekdays;
-        this.weekdays = weekdays;
-    }
-
-    final String locales;
-    final String ampms;
-    final String eras;
-    final String months;
-    final String shortMonths;
-    final String shortWeekdays;
-    final String weekdays;
+  public final static String DATA = $DATA;
 }

@@ -23,51 +23,7 @@ final class DecimalFormatSymbolsProvider {
 
   public final static String SELECTED_LOCALES = $SELECTED_LOCALES;
 
-$REGISTER_METHOD
+$DATA_COMMENT
 
-    private DecimalFormatSymbolsProvider(final String locales,
-                                         final char decimalSeparator,
-                                         final char digit,
-                                         final String exponentSeparator,
-                                         final char groupingSeparator,
-                                         final String infinity,
-                                         final String internationalCurrencySymbol,
-                                         final char minusSign,
-                                         final char monetaryDecimalSeparator,
-                                         final String nan,
-                                         final char patternSeparator,
-                                         final char percent,
-                                         final char perMill,
-                                         final char zeroDigit) {
-        super();
-        this.locales = locales;
-        this.decimalSeparator = decimalSeparator;
-        this.digit = digit;
-        this.exponentSeparator = exponentSeparator;
-        this.groupingSeparator = groupingSeparator;
-        this.infinity = infinity;
-        this.internationalCurrencySymbol = internationalCurrencySymbol;
-        this.minusSign = minusSign;
-        this.monetaryDecimalSeparator = monetaryDecimalSeparator;
-        this.nan = nan;
-        this.patternSeparator = patternSeparator;
-        this.percent = percent;
-        this.perMill = perMill;
-        this.zeroDigit = zeroDigit;
-    }
-
-    final String locales;
-    final char decimalSeparator;
-    final char digit;
-    final String exponentSeparator;
-    final char groupingSeparator;
-    final String infinity;
-    final String internationalCurrencySymbol;
-    final char minusSign;
-    final char monetaryDecimalSeparator;
-    final String nan;
-    final char patternSeparator;
-    final char percent;
-    final char perMill;
-    final char zeroDigit;
+  public final static String DATA = $DATA;
 }

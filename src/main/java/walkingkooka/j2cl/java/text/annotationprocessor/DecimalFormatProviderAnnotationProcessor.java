@@ -18,20 +18,21 @@
 package walkingkooka.j2cl.java.text.annotationprocessor;
 
 import walkingkooka.j2cl.locale.annotationprocessor.LocaleAwareAnnotationProcessor;
+import walkingkooka.text.printer.IndentingPrinter;
 
+import java.io.DataOutput;
 import java.util.Set;
 
 public final class DecimalFormatProviderAnnotationProcessor extends LocaleAwareAnnotationProcessor {
 
     @Override
-    protected String generateTemplateMergeReplacement(final Set<String> languageTags,
-                                                      final String filter) {
-        return DecimalFormatProviderTool.generateMethod(languageTags);
-    }
-
-    @Override
-    protected String placeholder() {
-        return "$REGISTER_METHOD";
+    protected void generate(final Set<String> locales,
+                            final String filter,
+                            final DataOutput dataOutput,
+                            final IndentingPrinter comments) throws Exception {
+        DecimalFormatProviderTool.generate(locales,
+                dataOutput,
+                comments);
     }
 
     @Override
