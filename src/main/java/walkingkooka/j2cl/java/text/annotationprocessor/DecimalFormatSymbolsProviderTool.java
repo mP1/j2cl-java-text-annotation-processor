@@ -20,44 +20,41 @@ package walkingkooka.j2cl.java.text.annotationprocessor;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.j2cl.java.io.string.StringDataInputDataOutput;
 import walkingkooka.j2cl.locale.WalkingkookaLanguageTag;
-import walkingkooka.text.Indentation;
+import walkingkooka.j2cl.locale.annotationprocessor.LocaleAwareAnnotationProcessor;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.Printer;
 import walkingkooka.text.printer.Printers;
 
+import java.io.DataOutput;
+import java.io.IOException;
 import java.text.DecimalFormatSymbols;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * This tool prints to sysout, which will become the main body of <code>DecimalFormatSymbolProvider</code>
  */
-public final class DecimalFormatSymbolsProviderTool extends LocaleProviderTool {
+public final class DecimalFormatSymbolsProviderTool {
 
-    public static void main(final String[] args) {
-        final IndentingPrinter printer = Printers.sysOut().indenting(Indentation.with("  "));
-        new DecimalFormatSymbolsProviderTool(printer).print(WalkingkookaLanguageTag.all("EN*"));
-        printer.flush();
-    }
-
-    static String generateMethod(final Set<String> languageTags) {
-        final StringBuilder output = new StringBuilder();
-        try (final Printer printer = Printers.stringBuilder(output, LineEnding.SYSTEM)) {
-            new DecimalFormatSymbolsProviderTool(printer.indenting(Indentation.with("  "))).print(languageTags);
+    public static void main(final String[] args) throws IOException {
+        try (final Printer printer = Printers.sysOut()) {
+            final StringBuilder data = new StringBuilder();
+            generate(WalkingkookaLanguageTag.all("*"),
+                    StringDataInputDataOutput.output(data::append),
+                    LocaleAwareAnnotationProcessor.comments(printer));
+            printer.print(data);
+            printer.flush();
         }
-
-        return output.toString();
     }
 
-    private DecimalFormatSymbolsProviderTool(final IndentingPrinter printer) {
-        super(printer);
-    }
-
-    @Override
-    void print0(final Set<String> languageTags) {
+    static void generate(final Set<String> languageTags,
+                         final DataOutput data,
+                         final IndentingPrinter comments) throws IOException {
         final Map<DecimalFormatSymbols, Set<String>> symbolToLanguageTags = Maps.sorted(DecimalFormatSymbolsProviderTool::decimalFormatSymbolsComparator);
 
         for (final String languageTag : languageTags) {
@@ -72,44 +69,105 @@ public final class DecimalFormatSymbolsProviderTool extends LocaleProviderTool {
         }
 
         final Map<String, DecimalFormatSymbols> languageTagToSymbols = Maps.sorted();
-        for(final Entry<DecimalFormatSymbols, Set<String>> languageTagAndSymbol : symbolToLanguageTags.entrySet()) {
+        for (final Entry<DecimalFormatSymbols, Set<String>> languageTagAndSymbol : symbolToLanguageTags.entrySet()) {
             languageTagToSymbols.put(languageTagAndSymbol.getValue().iterator().next(), languageTagAndSymbol.getKey());
         }
 
-        this.line("static void register(final java.util.function.Consumer<DecimalFormatSymbolsProvider> registry) {");
-        this.indent();
-        {
-            for (final DecimalFormatSymbols symbols : languageTagToSymbols.values()) {
-                final Set<String> symbolLanguageTags = symbolToLanguageTags.get(symbols);
+        data.writeInt(languageTagToSymbols.size());
 
-                this.line("registry.accept(new DecimalFormatSymbolsProvider(");
-                this.indent();
-                {
-                    this.line(tabbed(symbolLanguageTags) + ", // locales");
+        for (final DecimalFormatSymbols symbols : languageTagToSymbols.values()) {
+            final Set<String> symbolLanguageTags = symbolToLanguageTags.get(symbols);
 
-                    this.line(quote(symbols.getDecimalSeparator()) + ", // decimalSeparator");
-                    this.line(quote(symbols.getDigit()) + ", // digit");
-                    this.line(quote(symbols.getExponentSeparator()) + ", // exponentSeparator");
-                    this.line(quote(symbols.getGroupingSeparator()) + ", // groupingSeparator");
-                    this.line(quote(symbols.getInfinity()) + ", // infinity");
-                    this.line(quote(symbols.getInternationalCurrencySymbol()) + ", // internationalCurrencySymbol");
-                    this.line(quote(symbols.getMinusSign()) + ", // minusSign");
-                    this.line(quote(symbols.getMonetaryDecimalSeparator()) + ", // monetaryDecimalSeparator");
-                    this.line(quote(symbols.getNaN()) + ", // nan");
-                    this.line(quote(symbols.getPatternSeparator()) + ", // patternSeparator");
-                    this.line(quote(symbols.getPercent()) + ", // percent");
-                    this.line(quote(symbols.getPerMill()) + ", // perMill");
-                    this.line(quote(symbols.getZeroDigit()) + " // zeroDigit");
+            {
+                comments.lineStart();
+                comments.print("locales=" + symbolLanguageTags.stream().collect(Collectors.joining(", ")));
+                data.writeInt(symbolLanguageTags.size());
+                for (final String languageTag : symbolLanguageTags) {
+                    data.writeUTF(languageTag);
                 }
-                this.outdent();
-
-                this.line("));");
-
-                this.emptyLine();
             }
+            {
+                final char decimalSeparator = symbols.getDecimalSeparator();
+                comments.lineStart();
+                comments.print("decimalSeparator=" + decimalSeparator);
+                data.writeChar(decimalSeparator);
+            }
+            {
+                final char digit = symbols.getDigit();
+                comments.lineStart();
+                comments.print("digit=" + digit);
+                data.writeChar(digit);
+            }
+            {
+                final String exponentSeparator = symbols.getExponentSeparator();
+                comments.lineStart();
+                comments.print("exponentSeparator=" + exponentSeparator);
+                data.writeUTF(exponentSeparator);
+            }
+            {
+                final char groupingSeparator = symbols.getGroupingSeparator();
+                comments.lineStart();
+                comments.print("groupingSeparator=" + groupingSeparator);
+                data.writeChar(groupingSeparator);
+            }
+            {
+                final String infinity = symbols.getInfinity();
+                comments.lineStart();
+                comments.print("infinity=" + infinity);
+                data.writeUTF(infinity);
+            }
+            {
+                final String internationalCurrencySymbol = symbols.getInternationalCurrencySymbol();
+                comments.lineStart();
+                comments.print("internationalCurrencySymbol=" + internationalCurrencySymbol);
+                data.writeUTF(internationalCurrencySymbol);
+            }
+            {
+                final char minusSign = symbols.getMinusSign();
+                comments.lineStart();
+                comments.print("minusSign=" + minusSign);
+                data.writeChar(minusSign);
+            }
+            {
+                final char monetaryDecimalSeparator = symbols.getMonetaryDecimalSeparator();
+                comments.lineStart();
+                comments.print("monetaryDecimalSeparator=" + monetaryDecimalSeparator);
+                data.writeChar(monetaryDecimalSeparator);
+            }
+            {
+                final String nan = symbols.getNaN();
+                comments.lineStart();
+                comments.print("nan=" + nan);
+                data.writeUTF(nan);
+            }
+            {
+                final char patternSeparator = symbols.getPatternSeparator();
+                comments.lineStart();
+                comments.print("patternSeparator=" + patternSeparator);
+                data.writeChar(patternSeparator);
+            }
+            {
+                final char percent = symbols.getPercent();
+                comments.lineStart();
+                comments.print("percent=" + percent);
+                data.writeChar(percent);
+            }
+            {
+                final char perMill = symbols.getPerMill();
+                comments.lineStart();
+                comments.print("perMill=" + perMill);
+                data.writeChar(perMill);
+            }
+            {
+                final char zeroDigit = symbols.getZeroDigit();
+                comments.lineStart();
+                comments.print("zeroDigit=" + zeroDigit);
+                data.writeChar(zeroDigit);
+            }
+
+            comments.lineStart();
+            comments.print(LineEnding.SYSTEM);
         }
-        this.outdent();
-        this.line("}");
     }
 
     private static int decimalFormatSymbolsComparator(final DecimalFormatSymbols left,
@@ -134,5 +192,9 @@ public final class DecimalFormatSymbolsProviderTool extends LocaleProviderTool {
                 .label("perMill").value(symbols.getPerMill())
                 .label("zeroDigit").value(symbols.getZeroDigit())
                 .build();
+    }
+
+    private DecimalFormatSymbolsProviderTool() {
+        throw new UnsupportedOperationException();
     }
 }

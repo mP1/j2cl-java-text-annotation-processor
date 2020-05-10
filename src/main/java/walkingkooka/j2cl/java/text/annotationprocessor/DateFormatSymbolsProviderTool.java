@@ -19,45 +19,53 @@ package walkingkooka.j2cl.java.text.annotationprocessor;
 
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.j2cl.java.io.string.StringDataInputDataOutput;
 import walkingkooka.j2cl.locale.WalkingkookaLanguageTag;
-import walkingkooka.text.Indentation;
-import walkingkooka.text.LineEnding;
+import walkingkooka.j2cl.locale.annotationprocessor.LocaleAwareAnnotationProcessor;
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.Printer;
 import walkingkooka.text.printer.Printers;
 
+import java.io.DataOutput;
+import java.io.IOException;
 import java.text.DateFormatSymbols;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * This tool prints to sysout, that prints a <code></code>DateFormatSymbolsProvider#register()</code>
  */
-public final class DateFormatSymbolsProviderTool extends LocaleProviderTool {
+public final class DateFormatSymbolsProviderTool {
 
-    public static void main(final String[] args) {
-        final IndentingPrinter printer = Printers.sysOut().indenting(Indentation.with("  "));
-        new DateFormatSymbolsProviderTool(printer).print(WalkingkookaLanguageTag.all("EN*"));
-        printer.flush();
-    }
-
-    static String generateMethod(final Set<String> languageTags) {
-        final StringBuilder output = new StringBuilder();
-        try (final Printer printer = Printers.stringBuilder(output, LineEnding.SYSTEM)) {
-            new DateFormatSymbolsProviderTool(printer.indenting(Indentation.with("  "))).print(languageTags);
+    public static void main(final String[] args) throws IOException {
+        try (final Printer printer = Printers.sysOut()) {
+            final StringBuilder data = new StringBuilder();
+            generate(WalkingkookaLanguageTag.all("*"),
+                    StringDataInputDataOutput.output(data::append),
+                    LocaleAwareAnnotationProcessor.comments(printer));
+            printer.print(CharSequences.quoteAndEscape(data));
+            printer.flush();
         }
-
-        return output.toString();
     }
 
-    private DateFormatSymbolsProviderTool(final IndentingPrinter printer) {
-        super(printer);
+    static void generate(final Set<String> languageTags,
+                         final DataOutput data,
+                         final IndentingPrinter comments) throws IOException {
+        new DateFormatSymbolsProviderTool(data, comments).generate0(languageTags);
     }
 
-    @Override
-    void print0(final Set<String> languageTags) {
+    private DateFormatSymbolsProviderTool(final DataOutput data,
+                                          final IndentingPrinter comments) {
+        super();
+        this.data = data;
+        this.comments = comments;
+    }
+
+    private void generate0(final Set<String> languageTags) throws IOException {
         final Map<DateFormatSymbols, Set<String>> symbolToLanguageTags = Maps.sorted(DateFormatSymbolsProviderTool::dateFormatSymbolsComparator);
 
         for (final String languageTag : languageTags) {
@@ -72,37 +80,36 @@ public final class DateFormatSymbolsProviderTool extends LocaleProviderTool {
         }
 
         final Map<String, DateFormatSymbols> languageTagToSymbols = Maps.sorted();
-        for(final Entry<DateFormatSymbols, Set<String>> languageTagAndSymbol : symbolToLanguageTags.entrySet()) {
+        for (final Entry<DateFormatSymbols, Set<String>> languageTagAndSymbol : symbolToLanguageTags.entrySet()) {
             languageTagToSymbols.put(languageTagAndSymbol.getValue().iterator().next(), languageTagAndSymbol.getKey());
         }
 
-        this.line("static void register(final java.util.function.Consumer<DateFormatSymbolsProvider> registry) {");
-        this.indent();
-        {
-            for (final DateFormatSymbols symbols : languageTagToSymbols.values()) {
-                final Set<String> symbolLanguageTags = symbolToLanguageTags.get(symbols);
+        final DataOutput data = this.data;
+        final IndentingPrinter comments = this.comments;
 
-                this.line("registry.accept(new DateFormatSymbolsProvider(");
-                this.indent();
-                {
-                    this.line(tabbed(symbolLanguageTags) + ", // locales");
+        data.writeInt(languageTagToSymbols.size());
 
-                    this.line(tabbed(symbols.getAmPmStrings()) + ", // ampm");
-                    this.line(tabbed(symbols.getEras()) + ", // eras");
-                    this.line(months(symbols.getMonths()) + ", // months"); // add extra 13th
-                    this.line(months(symbols.getShortMonths()) + ", // shortMonths");
-                    this.line(weekdays(symbols.getShortWeekdays()) + ", // shortWeekdays"); // add empty 1st.
-                    this.line(weekdays(symbols.getWeekdays()) + " // weekdays");
-                }
-                this.outdent();
+        for (final DateFormatSymbols symbols : languageTagToSymbols.values()) {
+            final Set<String> symbolLanguageTags = symbolToLanguageTags.get(symbols);
 
-                this.line("));");
+            comments.lineStart();
+            comments.print("locales=" + symbolLanguageTags.stream().collect(Collectors.joining(", ")));
 
-                this.emptyLine();
+            data.writeInt(symbolLanguageTags.size());
+            for (final String languageTag : symbolLanguageTags) {
+                data.writeUTF(languageTag);
             }
+
+            this.field(symbols.getAmPmStrings(), 0, "ampm");
+            this.field(symbols.getEras(), 0, "eras");
+            this.field(symbols.getMonths(), 0, "months"); // add extra 13th
+            this.field(symbols.getShortMonths(), 0, "shortMonths");
+            this.field(symbols.getShortWeekdays(), 1, "shortWeekdays"); // add empty 1st.
+            this.field(symbols.getWeekdays(), 1, "weekdays");
+
+            comments.lineStart();
+            comments.print(comments.lineEnding());
         }
-        this.outdent();
-        this.line("}");
     }
 
     private static int dateFormatSymbolsComparator(final DateFormatSymbols left,
@@ -110,29 +117,27 @@ public final class DateFormatSymbolsProviderTool extends LocaleProviderTool {
         return toString(left).compareTo(toString(right));
     }
 
-    final static CharSequence months(final String[] values) {
-        final int last = values.length - 1;
-
-        return tabbed(values[last].isEmpty() ?
-                Arrays.copyOf(values, values.length - 1) :
-                values);
-    }
-
-    /**
-     * Remove the first empty String.
-     */
-    final static CharSequence weekdays(final String[] values) {
-        final String[] without = new String[values.length - 1];
-        System.arraycopy(values, 1, without, 0, values.length - 1);
-        return tabbed(without);
-    }
-
     private static String toString(final DateFormatSymbols symbols) {
-        return toString(symbols.getAmPmStrings()) + "," +
-                toString(symbols.getEras()) + "," +
-                toString(symbols.getMonths()) + "," +
-                toString(symbols.getShortMonths()) + "," +
-                toString(symbols.getShortWeekdays()) + "," +
-                toString(symbols.getWeekdays());
+        return Arrays.toString(symbols.getAmPmStrings()) + "," +
+                Arrays.toString(symbols.getEras()) + "," +
+                Arrays.toString(symbols.getMonths()) + "," +
+                Arrays.toString(symbols.getShortMonths()) + "," +
+                Arrays.toString(symbols.getShortWeekdays()) + "," +
+                Arrays.toString(symbols.getWeekdays());
     }
+
+    private void field(final String[] values,
+                       final int offset,
+                       final String label) throws IOException {
+        this.comments.lineStart();
+        this.comments.print(label + "=" + Arrays.stream(values).skip(offset).collect(Collectors.joining(", ")));
+
+        this.data.writeInt(values.length - offset);
+        for (int i = offset; i < values.length; i++) {
+            this.data.writeUTF(values[i]);
+        }
+    }
+
+    private final DataOutput data;
+    private final IndentingPrinter comments;
 }
