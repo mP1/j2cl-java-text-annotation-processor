@@ -17,17 +17,24 @@
 
 package walkingkooka.j2cl.java.text.annotationprocessor;
 
+import walkingkooka.collect.set.Sets;
 import walkingkooka.j2cl.locale.annotationprocessor.LocaleAwareAnnotationProcessor;
 import walkingkooka.text.printer.IndentingPrinter;
 
 import java.io.DataOutput;
 import java.util.Set;
+import java.util.function.Function;
 
 public final class DecimalFormatProviderAnnotationProcessor extends LocaleAwareAnnotationProcessor {
 
     @Override
+    protected Set<String> additionalArguments() {
+        return Sets.empty();
+    }
+
+    @Override
     protected void generate(final Set<String> locales,
-                            final String filter,
+                            final Function<String, String> arguments,
                             final DataOutput dataOutput,
                             final IndentingPrinter comments) throws Exception {
         DecimalFormatProviderTool.generate(locales,
