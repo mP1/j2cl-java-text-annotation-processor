@@ -83,15 +83,10 @@ public final class DateFormatSymbolsProviderTool {
         data.writeInt(localeToSymbols.size());
 
         for (final DateFormatSymbols symbols : localeToSymbols.values()) {
-            final Set<Locale> symbolLocales = symbolToLocales.get(symbols);
-
-            comments.lineStart();
-            comments.print("locales=" + symbolLocales.stream().map(Locale::toLanguageTag).collect(Collectors.joining(", ")));
-
-            data.writeInt(symbolLocales.size());
-            for (final Locale languageTag : symbolLocales) {
-                data.writeUTF(languageTag.toLanguageTag());
-            }
+            LocaleAwareAnnotationProcessorTool.generateLocales(symbolToLocales.get(symbols),
+                    data,
+                    "locales",
+                    comments);
 
             this.field(symbols.getAmPmStrings(), 0, "ampm");
             this.field(symbols.getEras(), 0, "eras");
