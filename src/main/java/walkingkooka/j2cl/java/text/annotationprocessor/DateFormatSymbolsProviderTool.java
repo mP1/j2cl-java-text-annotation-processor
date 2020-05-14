@@ -18,10 +18,10 @@
 package walkingkooka.j2cl.java.text.annotationprocessor;
 
 import walkingkooka.collect.map.Maps;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.j2cl.java.io.string.StringDataInputDataOutput;
 import walkingkooka.j2cl.locale.WalkingkookaLanguageTag;
 import walkingkooka.j2cl.locale.annotationprocessor.LocaleAwareAnnotationProcessor;
+import walkingkooka.j2cl.locale.annotationprocessor.LocaleAwareAnnotationProcessorTool;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.Printer;
@@ -31,6 +31,7 @@ import java.io.DataOutput;
 import java.io.IOException;
 import java.text.DateFormatSymbols;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -44,7 +45,7 @@ public final class DateFormatSymbolsProviderTool {
     public static void main(final String[] args) throws IOException {
         try (final Printer printer = Printers.sysOut()) {
             final StringBuilder data = new StringBuilder();
-            generate(WalkingkookaLanguageTag.all("*"),
+            generate(WalkingkookaLanguageTag.locales("*"),
                     StringDataInputDataOutput.output(data::append),
                     LocaleAwareAnnotationProcessor.comments(printer));
             printer.print(CharSequences.quoteAndEscape(data));
@@ -52,10 +53,10 @@ public final class DateFormatSymbolsProviderTool {
         }
     }
 
-    static void generate(final Set<String> languageTags,
+    static void generate(final Set<Locale> locales,
                          final DataOutput data,
                          final IndentingPrinter comments) throws IOException {
-        new DateFormatSymbolsProviderTool(data, comments).generate0(languageTags);
+        new DateFormatSymbolsProviderTool(data, comments).generate0(locales);
     }
 
     private DateFormatSymbolsProviderTool(final DataOutput data,
@@ -65,39 +66,31 @@ public final class DateFormatSymbolsProviderTool {
         this.comments = comments;
     }
 
-    private void generate0(final Set<String> languageTags) throws IOException {
-        final Map<DateFormatSymbols, Set<String>> symbolToLanguageTags = Maps.sorted(DateFormatSymbolsProviderTool::dateFormatSymbolsComparator);
+    private void generate0(final Set<Locale> locales) throws IOException {
+        final Map<DateFormatSymbols, Set<Locale>> symbolToLocales = LocaleAwareAnnotationProcessorTool.buildMultiLocaleMap(
+                DateFormatSymbolsProviderTool::dateFormatSymbolsComparator,
+                DateFormatSymbols::getInstance,
+                locales);
 
-        for (final String languageTag : languageTags) {
-            final DateFormatSymbols symbols = DateFormatSymbols.getInstance(java.util.Locale.forLanguageTag(languageTag));
-
-            Set<String> symbolLocales = symbolToLanguageTags.get(symbols);
-            if (null == symbolLocales) {
-                symbolLocales = Sets.sorted();
-                symbolToLanguageTags.put(symbols, symbolLocales);
-            }
-            symbolLocales.add(languageTag);
-        }
-
-        final Map<String, DateFormatSymbols> languageTagToSymbols = Maps.sorted();
-        for (final Entry<DateFormatSymbols, Set<String>> languageTagAndSymbol : symbolToLanguageTags.entrySet()) {
-            languageTagToSymbols.put(languageTagAndSymbol.getValue().iterator().next(), languageTagAndSymbol.getKey());
+        final Map<Locale, DateFormatSymbols> localeToSymbols = Maps.sorted(LocaleAwareAnnotationProcessorTool.LOCALE_COMPARATOR);
+        for (final Entry<DateFormatSymbols, Set<Locale>> languageTagAndSymbol : symbolToLocales.entrySet()) {
+            localeToSymbols.put(languageTagAndSymbol.getValue().iterator().next(), languageTagAndSymbol.getKey());
         }
 
         final DataOutput data = this.data;
         final IndentingPrinter comments = this.comments;
 
-        data.writeInt(languageTagToSymbols.size());
+        data.writeInt(localeToSymbols.size());
 
-        for (final DateFormatSymbols symbols : languageTagToSymbols.values()) {
-            final Set<String> symbolLanguageTags = symbolToLanguageTags.get(symbols);
+        for (final DateFormatSymbols symbols : localeToSymbols.values()) {
+            final Set<Locale> symbolLocales = symbolToLocales.get(symbols);
 
             comments.lineStart();
-            comments.print("locales=" + symbolLanguageTags.stream().collect(Collectors.joining(", ")));
+            comments.print("locales=" + symbolLocales.stream().map(Locale::toLanguageTag).collect(Collectors.joining(", ")));
 
-            data.writeInt(symbolLanguageTags.size());
-            for (final String languageTag : symbolLanguageTags) {
-                data.writeUTF(languageTag);
+            data.writeInt(symbolLocales.size());
+            for (final Locale languageTag : symbolLocales) {
+                data.writeUTF(languageTag.toLanguageTag());
             }
 
             this.field(symbols.getAmPmStrings(), 0, "ampm");

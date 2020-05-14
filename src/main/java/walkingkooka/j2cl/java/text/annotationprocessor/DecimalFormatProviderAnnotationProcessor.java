@@ -19,6 +19,7 @@ package walkingkooka.j2cl.java.text.annotationprocessor;
 
 import walkingkooka.collect.set.Sets;
 import walkingkooka.j2cl.locale.annotationprocessor.LocaleAwareAnnotationProcessor;
+import walkingkooka.j2cl.locale.annotationprocessor.LocaleAwareAnnotationProcessorTool;
 import walkingkooka.text.printer.IndentingPrinter;
 
 import java.io.DataOutput;
@@ -37,7 +38,7 @@ public final class DecimalFormatProviderAnnotationProcessor extends LocaleAwareA
                             final Function<String, String> arguments,
                             final DataOutput dataOutput,
                             final IndentingPrinter comments) throws Exception {
-        DecimalFormatProviderTool.generate(locales,
+        DecimalFormatProviderTool.generate(LocaleAwareAnnotationProcessorTool.toLocales(locales),
                 dataOutput,
                 comments);
     }

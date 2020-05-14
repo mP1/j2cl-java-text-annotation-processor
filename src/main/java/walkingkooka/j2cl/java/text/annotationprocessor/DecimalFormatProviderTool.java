@@ -24,6 +24,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.j2cl.java.io.string.StringDataInputDataOutput;
 import walkingkooka.j2cl.locale.WalkingkookaLanguageTag;
 import walkingkooka.j2cl.locale.annotationprocessor.LocaleAwareAnnotationProcessor;
+import walkingkooka.j2cl.locale.annotationprocessor.LocaleAwareAnnotationProcessorTool;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.Printer;
@@ -48,7 +49,7 @@ public final class DecimalFormatProviderTool {
     public static void main(final String[] args) throws IOException {
         try (final Printer printer = Printers.sysOut()) {
             final StringBuilder data = new StringBuilder();
-            generate(WalkingkookaLanguageTag.all("*"),
+            generate(WalkingkookaLanguageTag.locales("*"),
                     StringDataInputDataOutput.output(data::append),
                     LocaleAwareAnnotationProcessor.comments(printer));
             printer.print(CharSequences.quoteAndEscape(data));
@@ -56,10 +57,10 @@ public final class DecimalFormatProviderTool {
         }
     }
 
-    static void generate(final Set<String> languageTags,
+    static void generate(final Set<Locale> locales,
                          final DataOutput data,
                          final IndentingPrinter comments) throws IOException {
-        new DecimalFormatProviderTool(data, comments).generate0(languageTags);
+        new DecimalFormatProviderTool(data, comments).generate0(locales);
     }
 
     private DecimalFormatProviderTool(final DataOutput data,
@@ -69,12 +70,10 @@ public final class DecimalFormatProviderTool {
         this.comments = comments;
     }
 
-    private void generate0(final Set<String> languageTags) throws IOException {
-        final Map<List<DecimalFormat>, Set<String>> formatsToLanguageTags = Maps.sorted(DecimalFormatProviderTool::comparator);
+    private void generate0(final Set<Locale> locales) throws IOException {
+        final Map<List<DecimalFormat>, Set<Locale>> formatsToLocales = Maps.sorted(DecimalFormatProviderTool::comparator);
 
-        for (final String languageTag : languageTags) {
-            final Locale locale = Locale.forLanguageTag(languageTag);
-
+        for (final Locale locale : locales) {
             final DecimalFormat currency = (DecimalFormat) NumberFormat.getCurrencyInstance(locale);
             final DecimalFormat instance = (DecimalFormat) NumberFormat.getInstance(locale);
             final DecimalFormat integer = (DecimalFormat) NumberFormat.getIntegerInstance(locale);
@@ -83,33 +82,33 @@ public final class DecimalFormatProviderTool {
 
             final List<DecimalFormat> formats = Lists.of(currency, instance, integer, number, percent);
 
-            Set<String> formatLocales = formatsToLanguageTags.get(formats);
+            Set<Locale> formatLocales = formatsToLocales.get(formats);
             if (null == formatLocales) {
-                formatLocales = Sets.sorted();
-                formatsToLanguageTags.put(formats, formatLocales);
+                formatLocales = Sets.sorted(LocaleAwareAnnotationProcessorTool.LOCALE_COMPARATOR);
+                formatsToLocales.put(formats, formatLocales);
             }
-            formatLocales.add(languageTag);
+            formatLocales.add(locale);
         }
 
-        final Map<String, List<DecimalFormat>> languageTagToFormats = Maps.sorted();
-        for (final Entry<List<DecimalFormat>, Set<String>> formatAndlanguageTags : formatsToLanguageTags.entrySet()) {
-            languageTagToFormats.put(formatAndlanguageTags.getValue().iterator().next(), formatAndlanguageTags.getKey());
+        final Map<Locale, List<DecimalFormat>> localeToFormats = Maps.sorted(LocaleAwareAnnotationProcessorTool.LOCALE_COMPARATOR);
+        for (final Entry<List<DecimalFormat>, Set<Locale>> formatAndLocale : formatsToLocales.entrySet()) {
+            localeToFormats.put(formatAndLocale.getValue().iterator().next(), formatAndLocale.getKey());
         }
 
         final DataOutput data = this.data;
         final IndentingPrinter comments = this.comments;
-        data.writeInt(languageTagToFormats.size());
+        data.writeInt(localeToFormats.size());
 
-        for (final List<DecimalFormat> formats : languageTagToFormats.values()) {
-            final Set<String> formatLanguageTags = formatsToLanguageTags.get(formats);
+        for (final List<DecimalFormat> formats : localeToFormats.values()) {
+            final Set<Locale> formatLocale = formatsToLocales.get(formats);
             {
-                comments.print("locales=" + formatLanguageTags.stream().collect(Collectors.joining(",")));
+                comments.print("locales=" + formatLocale.stream().map(Locale::toLanguageTag).collect(Collectors.joining(",")));
                 comments.lineStart();
                 comments.print(comments.lineEnding());
 
-                data.writeInt(formatLanguageTags.size());
-                for (final String formatLanguageTag : formatLanguageTags) {
-                    data.writeUTF(formatLanguageTag);
+                data.writeInt(formatLocale.size());
+                for (final Locale formatLanguageTag : formatLocale) {
+                    data.writeUTF(formatLanguageTag.toLanguageTag());
                 }
 
                 generateDecimalFormat(formats.get(0), "Currency");

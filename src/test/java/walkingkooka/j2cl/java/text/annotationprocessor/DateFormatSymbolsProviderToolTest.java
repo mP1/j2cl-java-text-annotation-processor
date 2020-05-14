@@ -20,13 +20,13 @@ package walkingkooka.j2cl.java.text.annotationprocessor;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.j2cl.java.io.string.StringDataInputDataOutput;
+import walkingkooka.j2cl.locale.annotationprocessor.LocaleAwareAnnotationProcessorTool;
 import walkingkooka.text.printer.IndentingPrinter;
 
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 import java.text.DateFormatSymbols;
-import java.text.DecimalFormatSymbols;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -37,7 +37,7 @@ public final class DateFormatSymbolsProviderToolTest extends ProviderToolTestCas
 
     @Test
     public void testENAU() throws IOException {
-        this.generateAndCheck("EN-AU",
+        this.generateAndCheck("en-AU",
                 "// locales=en-AU\n" +
                         "// ampm=am, pm\n" +
                         "// eras=BC, AD\n" +
@@ -53,7 +53,7 @@ public final class DateFormatSymbolsProviderToolTest extends ProviderToolTestCas
 
     @Test
     public void testFRFR() throws IOException {
-        this.generateAndCheck("FR-FR",
+        this.generateAndCheck("fr-FR",
                 "// locales=fr-FR\n" +
                         "// ampm=AM, PM\n" +
                         "// eras=av. J.-C., ap. J.-C.\n" +
@@ -69,7 +69,7 @@ public final class DateFormatSymbolsProviderToolTest extends ProviderToolTestCas
 
     @Test
     public void testENAUENNZ() throws IOException {
-        this.generateAndCheck("EN-AU,EN-NZ",
+        this.generateAndCheck("en-AU,en-NZ",
                 "// locales=en-AU\n" +
                         "// ampm=am, pm\n" +
                         "// eras=BC, AD\n" +
@@ -138,6 +138,8 @@ public final class DateFormatSymbolsProviderToolTest extends ProviderToolTestCas
     void generate0(final Set<String> locales,
                    final DataOutput data,
                    final IndentingPrinter comments) throws IOException {
-        DateFormatSymbolsProviderTool.generate(locales, data, comments);
+        DateFormatSymbolsProviderTool.generate(LocaleAwareAnnotationProcessorTool.toLocales(locales),
+                data,
+                comments);
     }
 }

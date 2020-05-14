@@ -19,10 +19,10 @@ package walkingkooka.j2cl.java.text.annotationprocessor;
 
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.map.Maps;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.j2cl.java.io.string.StringDataInputDataOutput;
 import walkingkooka.j2cl.locale.WalkingkookaLanguageTag;
 import walkingkooka.j2cl.locale.annotationprocessor.LocaleAwareAnnotationProcessor;
+import walkingkooka.j2cl.locale.annotationprocessor.LocaleAwareAnnotationProcessorTool;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.Printer;
@@ -31,9 +31,11 @@ import walkingkooka.text.printer.Printers;
 import java.io.DataOutput;
 import java.io.IOException;
 import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -44,7 +46,7 @@ public final class DecimalFormatSymbolsProviderTool {
     public static void main(final String[] args) throws IOException {
         try (final Printer printer = Printers.sysOut()) {
             final StringBuilder data = new StringBuilder();
-            generate(WalkingkookaLanguageTag.all("*"),
+            generate(WalkingkookaLanguageTag.locales("*"),
                     StringDataInputDataOutput.output(data::append),
                     LocaleAwareAnnotationProcessor.comments(printer));
             printer.print(data);
@@ -52,38 +54,31 @@ public final class DecimalFormatSymbolsProviderTool {
         }
     }
 
-    static void generate(final Set<String> languageTags,
+    static void generate(final Set<Locale> locales,
                          final DataOutput data,
                          final IndentingPrinter comments) throws IOException {
-        final Map<DecimalFormatSymbols, Set<String>> symbolToLanguageTags = Maps.sorted(DecimalFormatSymbolsProviderTool::decimalFormatSymbolsComparator);
+        final Map<DecimalFormatSymbols, Set<Locale>> symbolToLanguageTags = LocaleAwareAnnotationProcessorTool.buildMultiLocaleMap(
+                DecimalFormatSymbolsProviderTool::decimalFormatSymbolsComparator,
+                localeToDecimalFormatSymbols(),
+                locales
+        );
 
-        for (final String languageTag : languageTags) {
-            final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(java.util.Locale.forLanguageTag(languageTag));
-
-            Set<String> symbolLocales = symbolToLanguageTags.get(symbols);
-            if (null == symbolLocales) {
-                symbolLocales = Sets.sorted();
-                symbolToLanguageTags.put(symbols, symbolLocales);
-            }
-            symbolLocales.add(languageTag);
+        final Map<Locale, DecimalFormatSymbols> localesToSymbols = Maps.sorted(LocaleAwareAnnotationProcessorTool.LOCALE_COMPARATOR);
+        for (final Entry<DecimalFormatSymbols, Set<Locale>> languageTagAndSymbol : symbolToLanguageTags.entrySet()) {
+            localesToSymbols.put(languageTagAndSymbol.getValue().iterator().next(), languageTagAndSymbol.getKey());
         }
 
-        final Map<String, DecimalFormatSymbols> languageTagToSymbols = Maps.sorted();
-        for (final Entry<DecimalFormatSymbols, Set<String>> languageTagAndSymbol : symbolToLanguageTags.entrySet()) {
-            languageTagToSymbols.put(languageTagAndSymbol.getValue().iterator().next(), languageTagAndSymbol.getKey());
-        }
+        data.writeInt(localesToSymbols.size());
 
-        data.writeInt(languageTagToSymbols.size());
-
-        for (final DecimalFormatSymbols symbols : languageTagToSymbols.values()) {
-            final Set<String> symbolLanguageTags = symbolToLanguageTags.get(symbols);
+        for (final DecimalFormatSymbols symbols : localesToSymbols.values()) {
+            final Set<Locale> symbolLanguageTags = symbolToLanguageTags.get(symbols);
 
             {
                 comments.lineStart();
-                comments.print("locales=" + symbolLanguageTags.stream().collect(Collectors.joining(", ")));
+                comments.print("locales=" + symbolLanguageTags.stream().map(Locale::toLanguageTag).collect(Collectors.joining(", ")));
                 data.writeInt(symbolLanguageTags.size());
-                for (final String languageTag : symbolLanguageTags) {
-                    data.writeUTF(languageTag);
+                for (final Locale languageTag : symbolLanguageTags) {
+                    data.writeUTF(languageTag.toLanguageTag());
                 }
             }
             {
@@ -173,6 +168,10 @@ public final class DecimalFormatSymbolsProviderTool {
     private static int decimalFormatSymbolsComparator(final DecimalFormatSymbols left,
                                                       final DecimalFormatSymbols right) {
         return toString(left).compareTo(toString(right));
+    }
+
+    private static Function<Locale, DecimalFormatSymbols> localeToDecimalFormatSymbols() {
+        return locale -> DecimalFormatSymbols.getInstance(locale);
     }
 
     // currency + currencySymbol are not written by generated code so they are not important to equality.
