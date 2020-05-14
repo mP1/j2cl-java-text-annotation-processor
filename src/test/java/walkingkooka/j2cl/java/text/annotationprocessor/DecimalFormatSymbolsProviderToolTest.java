@@ -19,6 +19,7 @@ package walkingkooka.j2cl.java.text.annotationprocessor;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.j2cl.java.io.string.StringDataInputDataOutput;
+import walkingkooka.j2cl.locale.annotationprocessor.LocaleAwareAnnotationProcessorTool;
 import walkingkooka.text.printer.IndentingPrinter;
 
 import java.io.DataInput;
@@ -34,7 +35,7 @@ public final class DecimalFormatSymbolsProviderToolTest extends ProviderToolTest
 
     @Test
     public void testENAU() throws IOException {
-        this.generateAndCheck("EN-AU",
+        this.generateAndCheck("en-AU",
                 "// locales=en-AU\n" +
                         "// decimalSeparator=.\n" +
                         "// digit=#\n" +
@@ -57,7 +58,7 @@ public final class DecimalFormatSymbolsProviderToolTest extends ProviderToolTest
 
     @Test
     public void testFRFR() throws IOException {
-        this.generateAndCheck("FR-FR",
+        this.generateAndCheck("fr-FR",
                 "// locales=fr-FR\n" +
                         "// decimalSeparator=,\n" +
                         "// digit=#\n" +
@@ -80,7 +81,7 @@ public final class DecimalFormatSymbolsProviderToolTest extends ProviderToolTest
 
     @Test
     public void testENAUFRFR() throws IOException {
-        this.generateAndCheck("EN-AU,FR-FR",
+        this.generateAndCheck("en-AU,fr-FR",
                 "// locales=en-AU\n" +
                         "// decimalSeparator=.\n" +
                         "// digit=#\n" +
@@ -186,6 +187,8 @@ public final class DecimalFormatSymbolsProviderToolTest extends ProviderToolTest
     void generate0(final Set<String> locales,
                    final DataOutput data,
                    final IndentingPrinter comments) throws IOException {
-        DecimalFormatSymbolsProviderTool.generate(locales, data, comments);
+        DecimalFormatSymbolsProviderTool.generate(LocaleAwareAnnotationProcessorTool.toLocales(locales),
+                data,
+                comments);
     }
 }

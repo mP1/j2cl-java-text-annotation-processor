@@ -19,6 +19,7 @@ package walkingkooka.j2cl.java.text.annotationprocessor;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.j2cl.java.io.string.StringDataInputDataOutput;
+import walkingkooka.j2cl.locale.annotationprocessor.LocaleAwareAnnotationProcessorTool;
 import walkingkooka.text.printer.IndentingPrinter;
 
 import java.io.DataInput;
@@ -35,7 +36,7 @@ public final class DecimalFormatProviderToolTest extends ProviderToolTestCase<De
 
     @Test
     public void testENAU() throws IOException {
-        this.generateAndCheck("EN-AU",
+        this.generateAndCheck("en-AU",
                 "// locales=en-AU\n" +
                         "// \n" +
                         "// Currency decimalSeparatorAlwaysShown=false\n" +
@@ -125,7 +126,7 @@ public final class DecimalFormatProviderToolTest extends ProviderToolTestCase<De
 
     @Test
     public void testENAUENNZ() throws IOException {
-        this.generateAndCheck("EN-AU,EN-NZ",
+        this.generateAndCheck("en-AU,en-NZ",
                 "// locales=en-AU,en-NZ\n" +
                         "// \n" +
                         "// Currency decimalSeparatorAlwaysShown=false\n" +
@@ -215,7 +216,7 @@ public final class DecimalFormatProviderToolTest extends ProviderToolTestCase<De
 
     @Test
     public void testFRFR() throws IOException {
-        this.generateAndCheck("FR-FR",
+        this.generateAndCheck("fr-FR",
                 "// locales=fr-FR\n" +
                         "// \n" +
                         "// Currency decimalSeparatorAlwaysShown=false\n" +
@@ -305,7 +306,7 @@ public final class DecimalFormatProviderToolTest extends ProviderToolTestCase<De
 
     @Test
     public void testFRFRFRCA() throws IOException {
-        this.generateAndCheck("FR-FR,FR-CA",
+        this.generateAndCheck("fr-FR,fr-CA",
                 "// locales=fr-CA\n" +
                         "// \n" +
                         "// Currency decimalSeparatorAlwaysShown=false\n" +
@@ -477,7 +478,7 @@ public final class DecimalFormatProviderToolTest extends ProviderToolTestCase<De
 
     @Test
     public void testENAUFRFR() throws IOException {
-        this.generateAndCheck("EN-AU,FR-FR",
+        this.generateAndCheck("en-AU,fr-FR",
                 "// locales=en-AU\n" +
                         "// \n" +
                         "// Currency decimalSeparatorAlwaysShown=false\n" +
@@ -941,6 +942,8 @@ public final class DecimalFormatProviderToolTest extends ProviderToolTestCase<De
     void generate0(final Set<String> locales,
                    final DataOutput data,
                    final IndentingPrinter comments) throws IOException {
-        DecimalFormatProviderTool.generate(locales, data, comments);
+        DecimalFormatProviderTool.generate(LocaleAwareAnnotationProcessorTool.toLocales(locales),
+                data,
+                comments);
     }
 }
