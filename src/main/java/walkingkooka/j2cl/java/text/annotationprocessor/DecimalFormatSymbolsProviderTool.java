@@ -36,7 +36,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * This tool prints to sysout, which will become the main body of <code>DecimalFormatSymbolProvider</code>
@@ -71,16 +70,11 @@ public final class DecimalFormatSymbolsProviderTool {
         data.writeInt(localesToSymbols.size());
 
         for (final DecimalFormatSymbols symbols : localesToSymbols.values()) {
-            final Set<Locale> symbolLanguageTags = symbolToLanguageTags.get(symbols);
+            LocaleAwareAnnotationProcessorTool.generateLocales(symbolToLanguageTags.get(symbols),
+                    data,
+                    "locales",
+                    comments);
 
-            {
-                comments.lineStart();
-                comments.print("locales=" + symbolLanguageTags.stream().map(Locale::toLanguageTag).collect(Collectors.joining(", ")));
-                data.writeInt(symbolLanguageTags.size());
-                for (final Locale languageTag : symbolLanguageTags) {
-                    data.writeUTF(languageTag.toLanguageTag());
-                }
-            }
             {
                 final char decimalSeparator = symbols.getDecimalSeparator();
                 comments.lineStart();

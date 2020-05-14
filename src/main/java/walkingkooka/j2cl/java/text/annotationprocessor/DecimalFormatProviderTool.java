@@ -100,23 +100,19 @@ public final class DecimalFormatProviderTool {
         data.writeInt(localeToFormats.size());
 
         for (final List<DecimalFormat> formats : localeToFormats.values()) {
-            final Set<Locale> formatLocale = formatsToLocales.get(formats);
-            {
-                comments.print("locales=" + formatLocale.stream().map(Locale::toLanguageTag).collect(Collectors.joining(",")));
-                comments.lineStart();
-                comments.print(comments.lineEnding());
+            LocaleAwareAnnotationProcessorTool.generateLocales(formatsToLocales.get(formats),
+                    data,
+                    "locales",
+                    comments);
 
-                data.writeInt(formatLocale.size());
-                for (final Locale formatLanguageTag : formatLocale) {
-                    data.writeUTF(formatLanguageTag.toLanguageTag());
-                }
+            comments.lineStart();
+            comments.print(comments.lineEnding());
 
-                generateDecimalFormat(formats.get(0), "Currency");
-                generateDecimalFormat(formats.get(1), "Instance");
-                generateDecimalFormat(formats.get(2), "Integer");
-                generateDecimalFormat(formats.get(3), "Number");
-                generateDecimalFormat(formats.get(4), "Percent");
-            }
+            generateDecimalFormat(formats.get(0), "Currency");
+            generateDecimalFormat(formats.get(1), "Instance");
+            generateDecimalFormat(formats.get(2), "Integer");
+            generateDecimalFormat(formats.get(3), "Number");
+            generateDecimalFormat(formats.get(4), "Percent");
         }
     }
 
