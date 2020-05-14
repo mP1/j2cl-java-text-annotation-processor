@@ -140,7 +140,6 @@ public final class DecimalFormatSymbolsProviderToolTest extends ProviderToolTest
 
         for (int i = 0; i < count; i++) {
             final Set<Locale> locales = this.readLocales(data);
-            System.err.println("@@@ " + i + " " + locales);
 
             final char decimalSeparator = data.readChar();
             final char digit = data.readChar();
