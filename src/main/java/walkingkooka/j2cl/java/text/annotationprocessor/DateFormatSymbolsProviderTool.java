@@ -19,6 +19,7 @@ package walkingkooka.j2cl.java.text.annotationprocessor;
 
 import walkingkooka.collect.map.Maps;
 import walkingkooka.j2cl.java.io.string.StringDataInputDataOutput;
+import walkingkooka.j2cl.java.util.locale.support.LocaleSupport;
 import walkingkooka.j2cl.locale.WalkingkookaLanguageTag;
 import walkingkooka.j2cl.locale.annotationprocessor.LocaleAwareAnnotationProcessor;
 import walkingkooka.j2cl.locale.annotationprocessor.LocaleAwareAnnotationProcessorTool;
@@ -83,9 +84,8 @@ public final class DateFormatSymbolsProviderTool {
         data.writeInt(localeToSymbols.size());
 
         for (final DateFormatSymbols symbols : localeToSymbols.values()) {
-            LocaleAwareAnnotationProcessorTool.generateLocales(symbolToLocales.get(symbols),
+            LocaleSupport.generateLocales(symbolToLocales.get(symbols),
                     data,
-                    "locales",
                     comments);
 
             this.field(symbols.getAmPmStrings(), 0, "ampm");
