@@ -22,6 +22,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.j2cl.java.io.string.StringDataInputDataOutput;
+import walkingkooka.j2cl.java.util.locale.support.LocaleSupport;
 import walkingkooka.j2cl.locale.WalkingkookaLanguageTag;
 import walkingkooka.j2cl.locale.annotationprocessor.LocaleAwareAnnotationProcessor;
 import walkingkooka.j2cl.locale.annotationprocessor.LocaleAwareAnnotationProcessorTool;
@@ -100,9 +101,8 @@ public final class DecimalFormatProviderTool {
         data.writeInt(localeToFormats.size());
 
         for (final List<DecimalFormat> formats : localeToFormats.values()) {
-            LocaleAwareAnnotationProcessorTool.generateLocales(formatsToLocales.get(formats),
+            LocaleSupport.generateLocales(formatsToLocales.get(formats),
                     data,
-                    "locales",
                     comments);
 
             comments.lineStart();

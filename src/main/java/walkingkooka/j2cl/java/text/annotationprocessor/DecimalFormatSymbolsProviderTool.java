@@ -20,6 +20,7 @@ package walkingkooka.j2cl.java.text.annotationprocessor;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.j2cl.java.io.string.StringDataInputDataOutput;
+import walkingkooka.j2cl.java.util.locale.support.LocaleSupport;
 import walkingkooka.j2cl.locale.WalkingkookaLanguageTag;
 import walkingkooka.j2cl.locale.annotationprocessor.LocaleAwareAnnotationProcessor;
 import walkingkooka.j2cl.locale.annotationprocessor.LocaleAwareAnnotationProcessorTool;
@@ -70,9 +71,8 @@ public final class DecimalFormatSymbolsProviderTool {
         data.writeInt(localesToSymbols.size());
 
         for (final DecimalFormatSymbols symbols : localesToSymbols.values()) {
-            LocaleAwareAnnotationProcessorTool.generateLocales(symbolToLanguageTags.get(symbols),
+            LocaleSupport.generateLocales(symbolToLanguageTags.get(symbols),
                     data,
-                    "locales",
                     comments);
 
             {

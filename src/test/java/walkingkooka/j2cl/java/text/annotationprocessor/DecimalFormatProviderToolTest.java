@@ -127,7 +127,7 @@ public final class DecimalFormatProviderToolTest extends ProviderToolTestCase<De
     @Test
     public void testENAUENNZ() throws IOException {
         this.generateAndCheck("en-AU,en-NZ",
-                "// locales=en-AU, en-NZ\n" +
+                "// locales=en-AU,en-NZ\n" +
                         "// \n" +
                         "// Currency decimalSeparatorAlwaysShown=false\n" +
                         "// Currency groupingSize=3\n" +
