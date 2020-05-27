@@ -39,12 +39,12 @@ public final class DateFormatSymbolsProviderToolTest extends ProviderToolTestCas
     public void testENAU() throws IOException {
         this.generateAndCheck("en-AU",
                 "// locales=en-AU\n" +
-                        "// ampm=am, pm\n" +
-                        "// eras=BC, AD\n" +
-                        "// months=January, February, March, April, May, June, July, August, September, October, November, December, \n" +
-                        "// shortMonths=Jan., Feb., Mar., Apr., May, Jun., Jul., Aug., Sep., Oct., Nov., Dec., \n" +
-                        "// shortWeekdays=Sun., Mon., Tue., Wed., Thu., Fri., Sat.\n" +
-                        "// weekdays=Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday\n" +
+                        "//   ampm=am, pm\n" +
+                        "//   eras=BC, AD\n" +
+                        "//   months=January, February, March, April, May, June, July, August, September, October, November, December, \n" +
+                        "//   shortMonths=Jan., Feb., Mar., Apr., May, Jun., Jul., Aug., Sep., Oct., Nov., Dec., \n" +
+                        "//   shortWeekdays=Sun., Mon., Tue., Wed., Thu., Fri., Sat.\n" +
+                        "//   weekdays=Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday\n" +
                         "// \n" +
                         "\n" +
                         "\n" +
@@ -55,12 +55,12 @@ public final class DateFormatSymbolsProviderToolTest extends ProviderToolTestCas
     public void testFRFR() throws IOException {
         this.generateAndCheck("fr-FR",
                 "// locales=fr-FR\n" +
-                        "// ampm=AM, PM\n" +
-                        "// eras=av. J.-C., ap. J.-C.\n" +
-                        "// months=janvier, février, mars, avril, mai, juin, juillet, août, septembre, octobre, novembre, décembre, \n" +
-                        "// shortMonths=janv., févr., mars, avr., mai, juin, juil., août, sept., oct., nov., déc., \n" +
-                        "// shortWeekdays=dim., lun., mar., mer., jeu., ven., sam.\n" +
-                        "// weekdays=dimanche, lundi, mardi, mercredi, jeudi, vendredi, samedi\n" +
+                        "//   ampm=AM, PM\n" +
+                        "//   eras=av. J.-C., ap. J.-C.\n" +
+                        "//   months=janvier, février, mars, avril, mai, juin, juillet, août, septembre, octobre, novembre, décembre, \n" +
+                        "//   shortMonths=janv., févr., mars, avr., mai, juin, juil., août, sept., oct., nov., déc., \n" +
+                        "//   shortWeekdays=dim., lun., mar., mer., jeu., ven., sam.\n" +
+                        "//   weekdays=dimanche, lundi, mardi, mercredi, jeudi, vendredi, samedi\n" +
                         "// \n" +
                         "\n" +
                         "\n" +
@@ -71,20 +71,20 @@ public final class DateFormatSymbolsProviderToolTest extends ProviderToolTestCas
     public void testENAUENNZ() throws IOException {
         this.generateAndCheck("en-AU,en-NZ",
                 "// locales=en-AU\n" +
-                        "// ampm=am, pm\n" +
-                        "// eras=BC, AD\n" +
-                        "// months=January, February, March, April, May, June, July, August, September, October, November, December, \n" +
-                        "// shortMonths=Jan., Feb., Mar., Apr., May, Jun., Jul., Aug., Sep., Oct., Nov., Dec., \n" +
-                        "// shortWeekdays=Sun., Mon., Tue., Wed., Thu., Fri., Sat.\n" +
-                        "// weekdays=Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday\n" +
+                        "//   ampm=am, pm\n" +
+                        "//   eras=BC, AD\n" +
+                        "//   months=January, February, March, April, May, June, July, August, September, October, November, December, \n" +
+                        "//   shortMonths=Jan., Feb., Mar., Apr., May, Jun., Jul., Aug., Sep., Oct., Nov., Dec., \n" +
+                        "//   shortWeekdays=Sun., Mon., Tue., Wed., Thu., Fri., Sat.\n" +
+                        "//   weekdays=Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday\n" +
                         "// \n" +
                         "// locales=en-NZ\n" +
-                        "// ampm=AM, PM\n" +
-                        "// eras=BC, AD\n" +
-                        "// months=January, February, March, April, May, June, July, August, September, October, November, December, \n" +
-                        "// shortMonths=Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec, \n" +
-                        "// shortWeekdays=Sun, Mon, Tue, Wed, Thu, Fri, Sat\n" +
-                        "// weekdays=Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday\n" +
+                        "//   ampm=AM, PM\n" +
+                        "//   eras=BC, AD\n" +
+                        "//   months=January, February, March, April, May, June, July, August, September, October, November, December, \n" +
+                        "//   shortMonths=Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec, \n" +
+                        "//   shortWeekdays=Sun, Mon, Tue, Wed, Thu, Fri, Sat\n" +
+                        "//   weekdays=Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday\n" +
                         "// \n" +
                         "\n" +
                         "\n" +
