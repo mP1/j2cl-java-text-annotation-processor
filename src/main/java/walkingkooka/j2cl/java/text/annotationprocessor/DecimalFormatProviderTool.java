@@ -104,15 +104,18 @@ public final class DecimalFormatProviderTool {
             LocaleSupport.generateLocales(formatsToLocales.get(formats),
                     data,
                     comments);
+            comments.indent();
+            {
+                comments.lineStart();
+                comments.print(comments.lineEnding());
 
-            comments.lineStart();
-            comments.print(comments.lineEnding());
-
-            generateDecimalFormat(formats.get(0), "Currency");
-            generateDecimalFormat(formats.get(1), "Instance");
-            generateDecimalFormat(formats.get(2), "Integer");
-            generateDecimalFormat(formats.get(3), "Number");
-            generateDecimalFormat(formats.get(4), "Percent");
+                generateDecimalFormat(formats.get(0), "Currency");
+                generateDecimalFormat(formats.get(1), "Instance");
+                generateDecimalFormat(formats.get(2), "Integer");
+                generateDecimalFormat(formats.get(3), "Number");
+                generateDecimalFormat(formats.get(4), "Percent");
+            }
+            comments.outdent();
         }
     }
 

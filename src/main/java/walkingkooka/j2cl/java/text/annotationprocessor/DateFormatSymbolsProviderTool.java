@@ -87,14 +87,16 @@ public final class DateFormatSymbolsProviderTool {
             LocaleSupport.generateLocales(symbolToLocales.get(symbols),
                     data,
                     comments);
-
-            this.field(symbols.getAmPmStrings(), 0, "ampm");
-            this.field(symbols.getEras(), 0, "eras");
-            this.field(symbols.getMonths(), 0, "months"); // add extra 13th
-            this.field(symbols.getShortMonths(), 0, "shortMonths");
-            this.field(symbols.getShortWeekdays(), 1, "shortWeekdays"); // add empty 1st.
-            this.field(symbols.getWeekdays(), 1, "weekdays");
-
+            comments.indent();
+            {
+                this.field(symbols.getAmPmStrings(), 0, "ampm");
+                this.field(symbols.getEras(), 0, "eras");
+                this.field(symbols.getMonths(), 0, "months"); // add extra 13th
+                this.field(symbols.getShortMonths(), 0, "shortMonths");
+                this.field(symbols.getShortWeekdays(), 1, "shortWeekdays"); // add empty 1st.
+                this.field(symbols.getWeekdays(), 1, "weekdays");
+            }
+            comments.outdent();
             comments.lineStart();
             comments.print(comments.lineEnding());
         }

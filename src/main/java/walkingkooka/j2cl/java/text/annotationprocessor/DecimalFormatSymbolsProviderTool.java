@@ -74,85 +74,88 @@ public final class DecimalFormatSymbolsProviderTool {
             LocaleSupport.generateLocales(symbolToLanguageTags.get(symbols),
                     data,
                     comments);
-
+            comments.indent();
             {
-                final char decimalSeparator = symbols.getDecimalSeparator();
-                comments.lineStart();
-                comments.print("decimalSeparator=" + decimalSeparator);
-                data.writeChar(decimalSeparator);
+                {
+                    final char decimalSeparator = symbols.getDecimalSeparator();
+                    comments.lineStart();
+                    comments.print("decimalSeparator=" + decimalSeparator);
+                    data.writeChar(decimalSeparator);
+                }
+                {
+                    final char digit = symbols.getDigit();
+                    comments.lineStart();
+                    comments.print("digit=" + digit);
+                    data.writeChar(digit);
+                }
+                {
+                    final String exponentSeparator = symbols.getExponentSeparator();
+                    comments.lineStart();
+                    comments.print("exponentSeparator=" + exponentSeparator);
+                    data.writeUTF(exponentSeparator);
+                }
+                {
+                    final char groupingSeparator = symbols.getGroupingSeparator();
+                    comments.lineStart();
+                    comments.print("groupingSeparator=" + groupingSeparator);
+                    data.writeChar(groupingSeparator);
+                }
+                {
+                    final String infinity = symbols.getInfinity();
+                    comments.lineStart();
+                    comments.print("infinity=" + infinity);
+                    data.writeUTF(infinity);
+                }
+                {
+                    final String internationalCurrencySymbol = symbols.getInternationalCurrencySymbol();
+                    comments.lineStart();
+                    comments.print("internationalCurrencySymbol=" + internationalCurrencySymbol);
+                    data.writeUTF(internationalCurrencySymbol);
+                }
+                {
+                    final char minusSign = symbols.getMinusSign();
+                    comments.lineStart();
+                    comments.print("minusSign=" + minusSign);
+                    data.writeChar(minusSign);
+                }
+                {
+                    final char monetaryDecimalSeparator = symbols.getMonetaryDecimalSeparator();
+                    comments.lineStart();
+                    comments.print("monetaryDecimalSeparator=" + monetaryDecimalSeparator);
+                    data.writeChar(monetaryDecimalSeparator);
+                }
+                {
+                    final String nan = symbols.getNaN();
+                    comments.lineStart();
+                    comments.print("nan=" + nan);
+                    data.writeUTF(nan);
+                }
+                {
+                    final char patternSeparator = symbols.getPatternSeparator();
+                    comments.lineStart();
+                    comments.print("patternSeparator=" + patternSeparator);
+                    data.writeChar(patternSeparator);
+                }
+                {
+                    final char percent = symbols.getPercent();
+                    comments.lineStart();
+                    comments.print("percent=" + percent);
+                    data.writeChar(percent);
+                }
+                {
+                    final char perMill = symbols.getPerMill();
+                    comments.lineStart();
+                    comments.print("perMill=" + perMill);
+                    data.writeChar(perMill);
+                }
+                {
+                    final char zeroDigit = symbols.getZeroDigit();
+                    comments.lineStart();
+                    comments.print("zeroDigit=" + zeroDigit);
+                    data.writeChar(zeroDigit);
+                }
             }
-            {
-                final char digit = symbols.getDigit();
-                comments.lineStart();
-                comments.print("digit=" + digit);
-                data.writeChar(digit);
-            }
-            {
-                final String exponentSeparator = symbols.getExponentSeparator();
-                comments.lineStart();
-                comments.print("exponentSeparator=" + exponentSeparator);
-                data.writeUTF(exponentSeparator);
-            }
-            {
-                final char groupingSeparator = symbols.getGroupingSeparator();
-                comments.lineStart();
-                comments.print("groupingSeparator=" + groupingSeparator);
-                data.writeChar(groupingSeparator);
-            }
-            {
-                final String infinity = symbols.getInfinity();
-                comments.lineStart();
-                comments.print("infinity=" + infinity);
-                data.writeUTF(infinity);
-            }
-            {
-                final String internationalCurrencySymbol = symbols.getInternationalCurrencySymbol();
-                comments.lineStart();
-                comments.print("internationalCurrencySymbol=" + internationalCurrencySymbol);
-                data.writeUTF(internationalCurrencySymbol);
-            }
-            {
-                final char minusSign = symbols.getMinusSign();
-                comments.lineStart();
-                comments.print("minusSign=" + minusSign);
-                data.writeChar(minusSign);
-            }
-            {
-                final char monetaryDecimalSeparator = symbols.getMonetaryDecimalSeparator();
-                comments.lineStart();
-                comments.print("monetaryDecimalSeparator=" + monetaryDecimalSeparator);
-                data.writeChar(monetaryDecimalSeparator);
-            }
-            {
-                final String nan = symbols.getNaN();
-                comments.lineStart();
-                comments.print("nan=" + nan);
-                data.writeUTF(nan);
-            }
-            {
-                final char patternSeparator = symbols.getPatternSeparator();
-                comments.lineStart();
-                comments.print("patternSeparator=" + patternSeparator);
-                data.writeChar(patternSeparator);
-            }
-            {
-                final char percent = symbols.getPercent();
-                comments.lineStart();
-                comments.print("percent=" + percent);
-                data.writeChar(percent);
-            }
-            {
-                final char perMill = symbols.getPerMill();
-                comments.lineStart();
-                comments.print("perMill=" + perMill);
-                data.writeChar(perMill);
-            }
-            {
-                final char zeroDigit = symbols.getZeroDigit();
-                comments.lineStart();
-                comments.print("zeroDigit=" + zeroDigit);
-                data.writeChar(zeroDigit);
-            }
+            comments.outdent();
 
             comments.lineStart();
             comments.print(LineEnding.SYSTEM);

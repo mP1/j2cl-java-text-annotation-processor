@@ -37,19 +37,19 @@ public final class DecimalFormatSymbolsProviderToolTest extends ProviderToolTest
     public void testENAU() throws IOException {
         this.generateAndCheck("en-AU",
                 "// locales=en-AU\n" +
-                        "// decimalSeparator=.\n" +
-                        "// digit=#\n" +
-                        "// exponentSeparator=e\n" +
-                        "// groupingSeparator=,\n" +
-                        "// infinity=∞\n" +
-                        "// internationalCurrencySymbol=AUD\n" +
-                        "// minusSign=-\n" +
-                        "// monetaryDecimalSeparator=.\n" +
-                        "// nan=NaN\n" +
-                        "// patternSeparator=;\n" +
-                        "// percent=%\n" +
-                        "// perMill=‰\n" +
-                        "// zeroDigit=0\n" +
+                        "//   decimalSeparator=.\n" +
+                        "//   digit=#\n" +
+                        "//   exponentSeparator=e\n" +
+                        "//   groupingSeparator=,\n" +
+                        "//   infinity=∞\n" +
+                        "//   internationalCurrencySymbol=AUD\n" +
+                        "//   minusSign=-\n" +
+                        "//   monetaryDecimalSeparator=.\n" +
+                        "//   nan=NaN\n" +
+                        "//   patternSeparator=;\n" +
+                        "//   percent=%\n" +
+                        "//   perMill=‰\n" +
+                        "//   zeroDigit=0\n" +
                         "// \n" +
                         "\n" +
                         "\n" +
@@ -60,19 +60,19 @@ public final class DecimalFormatSymbolsProviderToolTest extends ProviderToolTest
     public void testFRFR() throws IOException {
         this.generateAndCheck("fr-FR",
                 "// locales=fr-FR\n" +
-                        "// decimalSeparator=,\n" +
-                        "// digit=#\n" +
-                        "// exponentSeparator=E\n" +
-                        "// groupingSeparator= \n" +
-                        "// infinity=∞\n" +
-                        "// internationalCurrencySymbol=EUR\n" +
-                        "// minusSign=-\n" +
-                        "// monetaryDecimalSeparator=,\n" +
-                        "// nan=NaN\n" +
-                        "// patternSeparator=;\n" +
-                        "// percent=%\n" +
-                        "// perMill=‰\n" +
-                        "// zeroDigit=0\n" +
+                        "//   decimalSeparator=,\n" +
+                        "//   digit=#\n" +
+                        "//   exponentSeparator=E\n" +
+                        "//   groupingSeparator= \n" +
+                        "//   infinity=∞\n" +
+                        "//   internationalCurrencySymbol=EUR\n" +
+                        "//   minusSign=-\n" +
+                        "//   monetaryDecimalSeparator=,\n" +
+                        "//   nan=NaN\n" +
+                        "//   patternSeparator=;\n" +
+                        "//   percent=%\n" +
+                        "//   perMill=‰\n" +
+                        "//   zeroDigit=0\n" +
                         "// \n" +
                         "\n" +
                         "\n" +
@@ -83,34 +83,34 @@ public final class DecimalFormatSymbolsProviderToolTest extends ProviderToolTest
     public void testENAUFRFR() throws IOException {
         this.generateAndCheck("en-AU,fr-FR",
                 "// locales=en-AU\n" +
-                        "// decimalSeparator=.\n" +
-                        "// digit=#\n" +
-                        "// exponentSeparator=e\n" +
-                        "// groupingSeparator=,\n" +
-                        "// infinity=∞\n" +
-                        "// internationalCurrencySymbol=AUD\n" +
-                        "// minusSign=-\n" +
-                        "// monetaryDecimalSeparator=.\n" +
-                        "// nan=NaN\n" +
-                        "// patternSeparator=;\n" +
-                        "// percent=%\n" +
-                        "// perMill=‰\n" +
-                        "// zeroDigit=0\n" +
+                        "//   decimalSeparator=.\n" +
+                        "//   digit=#\n" +
+                        "//   exponentSeparator=e\n" +
+                        "//   groupingSeparator=,\n" +
+                        "//   infinity=∞\n" +
+                        "//   internationalCurrencySymbol=AUD\n" +
+                        "//   minusSign=-\n" +
+                        "//   monetaryDecimalSeparator=.\n" +
+                        "//   nan=NaN\n" +
+                        "//   patternSeparator=;\n" +
+                        "//   percent=%\n" +
+                        "//   perMill=‰\n" +
+                        "//   zeroDigit=0\n" +
                         "// \n" +
                         "// locales=fr-FR\n" +
-                        "// decimalSeparator=,\n" +
-                        "// digit=#\n" +
-                        "// exponentSeparator=E\n" +
-                        "// groupingSeparator= \n" +
-                        "// infinity=∞\n" +
-                        "// internationalCurrencySymbol=EUR\n" +
-                        "// minusSign=-\n" +
-                        "// monetaryDecimalSeparator=,\n" +
-                        "// nan=NaN\n" +
-                        "// patternSeparator=;\n" +
-                        "// percent=%\n" +
-                        "// perMill=‰\n" +
-                        "// zeroDigit=0\n" +
+                        "//   decimalSeparator=,\n" +
+                        "//   digit=#\n" +
+                        "//   exponentSeparator=E\n" +
+                        "//   groupingSeparator= \n" +
+                        "//   infinity=∞\n" +
+                        "//   internationalCurrencySymbol=EUR\n" +
+                        "//   minusSign=-\n" +
+                        "//   monetaryDecimalSeparator=,\n" +
+                        "//   nan=NaN\n" +
+                        "//   patternSeparator=;\n" +
+                        "//   percent=%\n" +
+                        "//   perMill=‰\n" +
+                        "//   zeroDigit=0\n" +
                         "// \n" +
                         "\n" +
                         "\n" +
