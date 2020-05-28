@@ -11,6 +11,9 @@
 Contains several annotation processor that each generate a provider for a JRE class. All processors only generate
 for the selected Locales.
 
+- [DateFormatProviderAnnotationProcessor](https://github.com/mP1/j2cl-java-text-annotation-processor/blob/master/src/main/java/walkingkooka/j2cl/java/text/annotationprocessor/DateFormatProviderAnnotationProcessor.java)
+  generates a `DateFormatProvider` used by
+  [DateFormat](https://github.com/mP1/j2cl-java-text/blob/master/src/main/java/walkingkooka/j2cl/java/text/DateFormat.java). Holds all selected patterns for selected locales.
 - [DateFormatSymbolsProviderAnnotationProcessor](https://github.com/mP1/j2cl-java-text-annotation-processor/blob/master/src/main/java/walkingkooka/j2cl/java/text/annotationprocessor/DateFormatSymbolsProviderAnnotationProcessor.java)
   generates a `DateFormatSymbolsProvider` used by
   [DateFormatSymbols](https://github.com/mP1/j2cl-java-text/blob/master/src/main/java/walkingkooka/j2cl/java/text/DateFormatSymbols.java). Holds all selected symbol data.
@@ -19,7 +22,7 @@ for the selected Locales.
   [DecimalFormat](https://github.com/mP1/j2cl-java-text/blob/master/src/main/java/walkingkooka/j2cl/java/text/DecimalFormat.java). Holds patterns and other format data like decimal separator etc. 
 - [DecimalFormatSymbolsProviderAnnotationProcessor](https://github.com/mP1/j2cl-java-text-annotation-processor/blob/master/src/main/java/walkingkooka/j2cl/java/text/annotationprocessor/DecimalFormatSymbolsProviderAnnotationProcessor.java)
   generates a `DecimalFormatSymbolsProvider` used by
-  [DecimalFormatSymbols](https://github.com/mP1/j2cl-java-text/blob/master/src/main/java/walkingkooka/j2cl/java/text/DecimalFormatSymbols.java). Holds all selected symbol data. 
+  [DecimalFormatSymbols](https://github.com/mP1/j2cl-java-text/blob/master/src/main/java/walkingkooka/j2cl/java/text/DecimalFormatSymbols.java). Holds all selected format patterns. 
 
 
 To select which locales are included set the `walkingkooka.j2cl.java.util.Locale` annotation processor argument.
