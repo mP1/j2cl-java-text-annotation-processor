@@ -29,7 +29,6 @@ import java.io.DataOutput;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.Set;
 import java.util.function.Supplier;
@@ -382,7 +381,8 @@ public final class DateFormatProviderToolTest extends ProviderToolTestCase<DateF
     void generate0(final Set<String> locales,
                    final DataOutput data,
                    final IndentingPrinter comments) throws IOException {
-        DateFormatProviderTool.generate(LocaleAwareAnnotationProcessorTool.toLocales(locales),
+        DateFormatProviderTool.generate("?",
+                LocaleAwareAnnotationProcessorTool.toLocales(locales),
                 data,
                 comments);
     }

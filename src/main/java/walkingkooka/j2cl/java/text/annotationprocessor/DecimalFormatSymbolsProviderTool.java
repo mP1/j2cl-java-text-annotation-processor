@@ -46,7 +46,8 @@ public final class DecimalFormatSymbolsProviderTool {
     public static void main(final String[] args) throws IOException {
         try (final Printer printer = Printers.sysOut()) {
             final StringBuilder data = new StringBuilder();
-            generate(WalkingkookaLanguageTag.locales("*"),
+            generate("*",
+                    WalkingkookaLanguageTag.locales("*"),
                     StringDataInputDataOutput.output(data::append),
                     LocaleAwareAnnotationProcessor.comments(printer));
             printer.print(data);
@@ -54,9 +55,10 @@ public final class DecimalFormatSymbolsProviderTool {
         }
     }
 
-    static void generate(final Set<Locale> locales,
-                         final DataOutput data,
-                         final IndentingPrinter comments) throws IOException {
+    static String generate(final String filter,
+                           final Set<Locale> locales,
+                           final DataOutput data,
+                           final IndentingPrinter comments) throws IOException {
         final Map<DecimalFormatSymbols, Set<Locale>> symbolToLanguageTags = LocaleAwareAnnotationProcessorTool.buildMultiLocaleMap(
                 DecimalFormatSymbolsProviderTool::decimalFormatSymbolsComparator,
                 localeToDecimalFormatSymbols(),
@@ -160,6 +162,10 @@ public final class DecimalFormatSymbolsProviderTool {
             comments.lineStart();
             comments.print(LineEnding.SYSTEM);
         }
+
+        return LocaleAwareAnnotationProcessorTool.extractSummary(locales.size(),
+                "Locale",
+                filter);
     }
 
     private static int decimalFormatSymbolsComparator(final DecimalFormatSymbols left,
