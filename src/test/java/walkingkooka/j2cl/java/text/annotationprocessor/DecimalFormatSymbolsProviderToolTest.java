@@ -186,7 +186,8 @@ public final class DecimalFormatSymbolsProviderToolTest extends ProviderToolTest
     void generate0(final Set<String> locales,
                    final DataOutput data,
                    final IndentingPrinter comments) throws IOException {
-        DecimalFormatSymbolsProviderTool.generate(LocaleAwareAnnotationProcessorTool.toLocales(locales),
+        DecimalFormatSymbolsProviderTool.generate("?",
+                LocaleAwareAnnotationProcessorTool.toLocales(locales),
                 data,
                 comments);
     }

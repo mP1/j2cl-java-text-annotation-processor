@@ -34,11 +34,13 @@ public final class DecimalFormatProviderAnnotationProcessor extends LocaleAwareA
     }
 
     @Override
-    protected void generate(final Set<String> locales,
-                            final Function<String, String> arguments,
-                            final DataOutput dataOutput,
-                            final IndentingPrinter comments) throws Exception {
-        DecimalFormatProviderTool.generate(LocaleAwareAnnotationProcessorTool.toLocales(locales),
+    protected String generate(final String filter,
+                              final Set<String> locales,
+                              final Function<String, String> arguments,
+                              final DataOutput dataOutput,
+                              final IndentingPrinter comments) throws Exception {
+        return DecimalFormatProviderTool.generate(filter,
+                LocaleAwareAnnotationProcessorTool.toLocales(locales),
                 dataOutput,
                 comments);
     }

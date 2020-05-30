@@ -34,11 +34,13 @@ public final class DateFormatSymbolsProviderAnnotationProcessor extends LocaleAw
     }
 
     @Override
-    protected void generate(final Set<String> locales,
-                            final Function<String, String> arguments,
-                            final DataOutput dataOutput,
-                            final IndentingPrinter comments) throws Exception {
-        DateFormatSymbolsProviderTool.generate(LocaleAwareAnnotationProcessorTool.toLocales(locales),
+    protected String generate(final String filter,
+                              final Set<String> locales,
+                              final Function<String, String> arguments,
+                              final DataOutput dataOutput,
+                              final IndentingPrinter comments) throws Exception {
+        return DateFormatSymbolsProviderTool.generate(filter,
+                LocaleAwareAnnotationProcessorTool.toLocales(locales),
                 dataOutput,
                 comments);
     }

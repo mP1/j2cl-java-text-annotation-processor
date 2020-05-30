@@ -50,7 +50,8 @@ public final class DecimalFormatProviderTool {
     public static void main(final String[] args) throws IOException {
         try (final Printer printer = Printers.sysOut()) {
             final StringBuilder data = new StringBuilder();
-            generate(WalkingkookaLanguageTag.locales("*"),
+            generate("*",
+                    WalkingkookaLanguageTag.locales("*"),
                     StringDataInputDataOutput.output(data::append),
                     LocaleAwareAnnotationProcessor.comments(printer));
             printer.print(CharSequences.quoteAndEscape(data));
@@ -58,10 +59,14 @@ public final class DecimalFormatProviderTool {
         }
     }
 
-    static void generate(final Set<Locale> locales,
-                         final DataOutput data,
-                         final IndentingPrinter comments) throws IOException {
+    static String generate(final String filter,
+                           final Set<Locale> locales,
+                           final DataOutput data,
+                           final IndentingPrinter comments) throws IOException {
         new DecimalFormatProviderTool(data, comments).generate0(locales);
+        return LocaleAwareAnnotationProcessorTool.extractSummary(locales.size(),
+                "Locale",
+                filter);
     }
 
     private DecimalFormatProviderTool(final DataOutput data,

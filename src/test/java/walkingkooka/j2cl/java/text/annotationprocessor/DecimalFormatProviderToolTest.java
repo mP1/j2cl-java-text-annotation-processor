@@ -942,7 +942,8 @@ public final class DecimalFormatProviderToolTest extends ProviderToolTestCase<De
     void generate0(final Set<String> locales,
                    final DataOutput data,
                    final IndentingPrinter comments) throws IOException {
-        DecimalFormatProviderTool.generate(LocaleAwareAnnotationProcessorTool.toLocales(locales),
+        DecimalFormatProviderTool.generate("?",
+                LocaleAwareAnnotationProcessorTool.toLocales(locales),
                 data,
                 comments);
     }

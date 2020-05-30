@@ -138,7 +138,8 @@ public final class DateFormatSymbolsProviderToolTest extends ProviderToolTestCas
     void generate0(final Set<String> locales,
                    final DataOutput data,
                    final IndentingPrinter comments) throws IOException {
-        DateFormatSymbolsProviderTool.generate(LocaleAwareAnnotationProcessorTool.toLocales(locales),
+        DateFormatSymbolsProviderTool.generate("?",
+                LocaleAwareAnnotationProcessorTool.toLocales(locales),
                 data,
                 comments);
     }
