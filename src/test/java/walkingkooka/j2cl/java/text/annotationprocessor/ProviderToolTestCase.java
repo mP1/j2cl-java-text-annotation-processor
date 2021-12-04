@@ -20,8 +20,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public abstract class ProviderToolTestCase<T> implements ClassTesting<T> {
 
     ProviderToolTestCase() {
@@ -30,7 +28,7 @@ public abstract class ProviderToolTestCase<T> implements ClassTesting<T> {
 
     final void generateAndCheck(final String filter,
                                 final String expected) throws IOException {
-        assertEquals(expected,
+        this.checkEquals(expected,
                 generate(filter),
                 () -> "filter=" + CharSequences.quoteAndEscape(filter));
     }
@@ -85,7 +83,7 @@ public abstract class ProviderToolTestCase<T> implements ClassTesting<T> {
         final String language = locale.getLanguage();
 
         if (WalkingkookaLanguageTag.oldToNewLanguage(language).equals(language) && false == locale.toLanguageTag().equals("und")) {
-            assertEquals(tag, locale.toLanguageTag(), () -> "invalid locale " + CharSequences.quoteAndEscape(tag));
+            this.checkEquals(tag, locale.toLanguageTag(), () -> "invalid locale " + CharSequences.quoteAndEscape(tag));
         }
         return locale;
     }

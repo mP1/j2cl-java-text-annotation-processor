@@ -29,8 +29,6 @@ import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class DecimalFormatSymbolsProviderToolTest extends ProviderToolTestCase<DecimalFormatSymbolsProviderTool> {
 
     @Test
@@ -158,19 +156,19 @@ public final class DecimalFormatSymbolsProviderToolTest extends ProviderToolTest
             for (final Locale locale : locales) {
                 final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
 
-                assertEquals(symbols.getDecimalSeparator(), decimalSeparator, () -> "decimalSeparator for " + locale);
-                assertEquals(symbols.getDigit(), digit, () -> "digit for " + locale);
-                assertEquals(symbols.getExponentSeparator(), exponentSeparator, () -> "exponentSeparator for " + locale);
-                assertEquals(symbols.getGroupingSeparator(), groupingSeparator, () -> "groupingSeparator for " + locale);
-                assertEquals(symbols.getInfinity(), infinity, () -> "infinity for " + locale);
-                assertEquals(symbols.getInternationalCurrencySymbol(), internationalCurrencySymbol, () -> "internationalCurrencySymbol for " + locale);
-                assertEquals(symbols.getMinusSign(), minusSign, () -> "minusSign for " + locale);
-                assertEquals(symbols.getMonetaryDecimalSeparator(), monetaryDecimalSeparator, () -> "monetaryDecimalSeparator for " + locale);
-                assertEquals(symbols.getNaN(), nan, () -> "nan for " + locale);
-                assertEquals(symbols.getPatternSeparator(), patternSeparator, () -> "patternSeparator for " + locale);
-                assertEquals(symbols.getPercent(), percent, () -> "percent for " + locale);
-                assertEquals(symbols.getPerMill(), perMill, () -> "perMill for " + locale);
-                assertEquals(symbols.getZeroDigit(), zeroDigit, () -> "zeroDigit for " + locale);
+                this.checkEquals(symbols.getDecimalSeparator(), decimalSeparator, () -> "decimalSeparator for " + locale);
+                this.checkEquals(symbols.getDigit(), digit, () -> "digit for " + locale);
+                this.checkEquals(symbols.getExponentSeparator(), exponentSeparator, () -> "exponentSeparator for " + locale);
+                this.checkEquals(symbols.getGroupingSeparator(), groupingSeparator, () -> "groupingSeparator for " + locale);
+                this.checkEquals(symbols.getInfinity(), infinity, () -> "infinity for " + locale);
+                this.checkEquals(symbols.getInternationalCurrencySymbol(), internationalCurrencySymbol, () -> "internationalCurrencySymbol for " + locale);
+                this.checkEquals(symbols.getMinusSign(), minusSign, () -> "minusSign for " + locale);
+                this.checkEquals(symbols.getMonetaryDecimalSeparator(), monetaryDecimalSeparator, () -> "monetaryDecimalSeparator for " + locale);
+                this.checkEquals(symbols.getNaN(), nan, () -> "nan for " + locale);
+                this.checkEquals(symbols.getPatternSeparator(), patternSeparator, () -> "patternSeparator for " + locale);
+                this.checkEquals(symbols.getPercent(), percent, () -> "percent for " + locale);
+                this.checkEquals(symbols.getPerMill(), perMill, () -> "perMill for " + locale);
+                this.checkEquals(symbols.getZeroDigit(), zeroDigit, () -> "zeroDigit for " + locale);
             }
         }
     }

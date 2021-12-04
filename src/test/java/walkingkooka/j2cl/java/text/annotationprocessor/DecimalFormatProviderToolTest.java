@@ -30,8 +30,6 @@ import java.text.DecimalFormat;
 import java.util.Locale;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class DecimalFormatProviderToolTest extends ProviderToolTestCase<DecimalFormatProviderTool> {
 
     @Test
@@ -760,20 +758,20 @@ public final class DecimalFormatProviderToolTest extends ProviderToolTestCase<De
                 for (final Locale locale : locales) {
                     final DecimalFormat symbols = (DecimalFormat) DecimalFormat.getCurrencyInstance(locale);
 
-                    assertEquals(symbols.isDecimalSeparatorAlwaysShown(), decimalSeparatorAlwaysShown, () -> "decimalSeparator for currency " + locale);
-                    assertEquals(symbols.getGroupingSize(), groupingSize, () -> "groupingSize for currency " + locale);
-                    assertEquals(symbols.isGroupingUsed(), groupingUsed, () -> "groupingUsed for currency " + locale);
-                    assertEquals(symbols.getMaximumFractionDigits(), maximumFractionDigits, () -> "maximumFractionDigits for currency " + locale);
-                    assertEquals(symbols.getMinimumFractionDigits(), minimumFractionDigits, () -> "minimumFractionDigits for currency " + locale);
-                    assertEquals(symbols.getMaximumIntegerDigits(), maximumIntegerDigits, () -> "maximumIntegerDigits for currency " + locale);
-                    assertEquals(symbols.getMinimumIntegerDigits(), minimumIntegerDigits, () -> "minimumIntegerDigits for currency " + locale);
-                    assertEquals(symbols.getMultiplier(), multiplier, () -> "multiplier for currency " + locale);
-                    assertEquals(symbols.getNegativePrefix(), negativePrefix, () -> "negativePrefix for currency " + locale);
-                    assertEquals(symbols.getNegativeSuffix(), negativeSuffix, () -> "negativeSuffix for currency " + locale);
-                    assertEquals(symbols.toPattern(), pattern, () -> "pattern for currency " + locale);
-                    assertEquals(symbols.getPositivePrefix(), positivePrefix, () -> "positivePrefix for currency " + locale);
-                    assertEquals(symbols.getPositiveSuffix(), positiveSuffix, () -> "positiveSuffix for currency " + locale);
-                    assertEquals(symbols.getRoundingMode(), roundingMode, () -> "roundingMode for currency " + locale);
+                    this.checkEquals(symbols.isDecimalSeparatorAlwaysShown(), decimalSeparatorAlwaysShown, () -> "decimalSeparator for currency " + locale);
+                    this.checkEquals(symbols.getGroupingSize(), groupingSize, () -> "groupingSize for currency " + locale);
+                    this.checkEquals(symbols.isGroupingUsed(), groupingUsed, () -> "groupingUsed for currency " + locale);
+                    this.checkEquals(symbols.getMaximumFractionDigits(), maximumFractionDigits, () -> "maximumFractionDigits for currency " + locale);
+                    this.checkEquals(symbols.getMinimumFractionDigits(), minimumFractionDigits, () -> "minimumFractionDigits for currency " + locale);
+                    this.checkEquals(symbols.getMaximumIntegerDigits(), maximumIntegerDigits, () -> "maximumIntegerDigits for currency " + locale);
+                    this.checkEquals(symbols.getMinimumIntegerDigits(), minimumIntegerDigits, () -> "minimumIntegerDigits for currency " + locale);
+                    this.checkEquals(symbols.getMultiplier(), multiplier, () -> "multiplier for currency " + locale);
+                    this.checkEquals(symbols.getNegativePrefix(), negativePrefix, () -> "negativePrefix for currency " + locale);
+                    this.checkEquals(symbols.getNegativeSuffix(), negativeSuffix, () -> "negativeSuffix for currency " + locale);
+                    this.checkEquals(symbols.toPattern(), pattern, () -> "pattern for currency " + locale);
+                    this.checkEquals(symbols.getPositivePrefix(), positivePrefix, () -> "positivePrefix for currency " + locale);
+                    this.checkEquals(symbols.getPositiveSuffix(), positiveSuffix, () -> "positiveSuffix for currency " + locale);
+                    this.checkEquals(symbols.getRoundingMode(), roundingMode, () -> "roundingMode for currency " + locale);
                 }
             }
 
@@ -798,20 +796,20 @@ public final class DecimalFormatProviderToolTest extends ProviderToolTestCase<De
                 for (final Locale locale : locales) {
                     final DecimalFormat symbols = (DecimalFormat) DecimalFormat.getInstance(locale);
 
-                    assertEquals(symbols.isDecimalSeparatorAlwaysShown(), decimalSeparatorAlwaysShown, () -> "decimalSeparator for instance " + locale);
-                    assertEquals(symbols.getGroupingSize(), groupingSize, () -> "groupingSize for instance " + locale);
-                    assertEquals(symbols.isGroupingUsed(), groupingUsed, () -> "groupingUsed for instance " + locale);
-                    assertEquals(symbols.getMaximumFractionDigits(), maximumFractionDigits, () -> "maximumFractionDigits for instance " + locale);
-                    assertEquals(symbols.getMinimumFractionDigits(), minimumFractionDigits, () -> "minimumFractionDigits for instance " + locale);
-                    assertEquals(symbols.getMaximumIntegerDigits(), maximumIntegerDigits, () -> "maximumIntegerDigits for instance " + locale);
-                    assertEquals(symbols.getMinimumIntegerDigits(), minimumIntegerDigits, () -> "minimumIntegerDigits for instance " + locale);
-                    assertEquals(symbols.getMultiplier(), multiplier, () -> "multiplier for instance " + locale);
-                    assertEquals(symbols.getNegativePrefix(), negativePrefix, () -> "negativePrefix for instance " + locale);
-                    assertEquals(symbols.getNegativeSuffix(), negativeSuffix, () -> "negativeSuffix for instance " + locale);
-                    assertEquals(symbols.toPattern(), pattern, () -> "pattern for instance " + locale);
-                    assertEquals(symbols.getPositivePrefix(), positivePrefix, () -> "positivePrefix for instance " + locale);
-                    assertEquals(symbols.getPositiveSuffix(), positiveSuffix, () -> "positiveSuffix for instance " + locale);
-                    assertEquals(symbols.getRoundingMode(), roundingMode, () -> "roundingMode for instance " + locale);
+                    this.checkEquals(symbols.isDecimalSeparatorAlwaysShown(), decimalSeparatorAlwaysShown, () -> "decimalSeparator for instance " + locale);
+                    this.checkEquals(symbols.getGroupingSize(), groupingSize, () -> "groupingSize for instance " + locale);
+                    this.checkEquals(symbols.isGroupingUsed(), groupingUsed, () -> "groupingUsed for instance " + locale);
+                    this.checkEquals(symbols.getMaximumFractionDigits(), maximumFractionDigits, () -> "maximumFractionDigits for instance " + locale);
+                    this.checkEquals(symbols.getMinimumFractionDigits(), minimumFractionDigits, () -> "minimumFractionDigits for instance " + locale);
+                    this.checkEquals(symbols.getMaximumIntegerDigits(), maximumIntegerDigits, () -> "maximumIntegerDigits for instance " + locale);
+                    this.checkEquals(symbols.getMinimumIntegerDigits(), minimumIntegerDigits, () -> "minimumIntegerDigits for instance " + locale);
+                    this.checkEquals(symbols.getMultiplier(), multiplier, () -> "multiplier for instance " + locale);
+                    this.checkEquals(symbols.getNegativePrefix(), negativePrefix, () -> "negativePrefix for instance " + locale);
+                    this.checkEquals(symbols.getNegativeSuffix(), negativeSuffix, () -> "negativeSuffix for instance " + locale);
+                    this.checkEquals(symbols.toPattern(), pattern, () -> "pattern for instance " + locale);
+                    this.checkEquals(symbols.getPositivePrefix(), positivePrefix, () -> "positivePrefix for instance " + locale);
+                    this.checkEquals(symbols.getPositiveSuffix(), positiveSuffix, () -> "positiveSuffix for instance " + locale);
+                    this.checkEquals(symbols.getRoundingMode(), roundingMode, () -> "roundingMode for instance " + locale);
                 }
             }
 
@@ -836,20 +834,20 @@ public final class DecimalFormatProviderToolTest extends ProviderToolTestCase<De
                 for (final Locale locale : locales) {
                     final DecimalFormat symbols = (DecimalFormat) DecimalFormat.getIntegerInstance(locale);
 
-                    assertEquals(symbols.isDecimalSeparatorAlwaysShown(), decimalSeparatorAlwaysShown, () -> "decimalSeparator for integer " + locale);
-                    assertEquals(symbols.getGroupingSize(), groupingSize, () -> "groupingSize for integer " + locale);
-                    assertEquals(symbols.isGroupingUsed(), groupingUsed, () -> "groupingUsed for integer " + locale);
-                    assertEquals(symbols.getMaximumFractionDigits(), maximumFractionDigits, () -> "maximumFractionDigits for integer " + locale);
-                    assertEquals(symbols.getMinimumFractionDigits(), minimumFractionDigits, () -> "minimumFractionDigits for integer " + locale);
-                    assertEquals(symbols.getMaximumIntegerDigits(), maximumIntegerDigits, () -> "maximumIntegerDigits for integer " + locale);
-                    assertEquals(symbols.getMinimumIntegerDigits(), minimumIntegerDigits, () -> "minimumIntegerDigits for integer " + locale);
-                    assertEquals(symbols.getMultiplier(), multiplier, () -> "multiplier for integer " + locale);
-                    assertEquals(symbols.getNegativePrefix(), negativePrefix, () -> "negativePrefix for integer " + locale);
-                    assertEquals(symbols.getNegativeSuffix(), negativeSuffix, () -> "negativeSuffix for integer " + locale);
-                    assertEquals(symbols.toPattern(), pattern, () -> "pattern for integer " + locale);
-                    assertEquals(symbols.getPositivePrefix(), positivePrefix, () -> "positivePrefix for integer " + locale);
-                    assertEquals(symbols.getPositiveSuffix(), positiveSuffix, () -> "positiveSuffix for integer " + locale);
-                    assertEquals(symbols.getRoundingMode(), roundingMode, () -> "roundingMode for integer " + locale);
+                    this.checkEquals(symbols.isDecimalSeparatorAlwaysShown(), decimalSeparatorAlwaysShown, () -> "decimalSeparator for integer " + locale);
+                    this.checkEquals(symbols.getGroupingSize(), groupingSize, () -> "groupingSize for integer " + locale);
+                    this.checkEquals(symbols.isGroupingUsed(), groupingUsed, () -> "groupingUsed for integer " + locale);
+                    this.checkEquals(symbols.getMaximumFractionDigits(), maximumFractionDigits, () -> "maximumFractionDigits for integer " + locale);
+                    this.checkEquals(symbols.getMinimumFractionDigits(), minimumFractionDigits, () -> "minimumFractionDigits for integer " + locale);
+                    this.checkEquals(symbols.getMaximumIntegerDigits(), maximumIntegerDigits, () -> "maximumIntegerDigits for integer " + locale);
+                    this.checkEquals(symbols.getMinimumIntegerDigits(), minimumIntegerDigits, () -> "minimumIntegerDigits for integer " + locale);
+                    this.checkEquals(symbols.getMultiplier(), multiplier, () -> "multiplier for integer " + locale);
+                    this.checkEquals(symbols.getNegativePrefix(), negativePrefix, () -> "negativePrefix for integer " + locale);
+                    this.checkEquals(symbols.getNegativeSuffix(), negativeSuffix, () -> "negativeSuffix for integer " + locale);
+                    this.checkEquals(symbols.toPattern(), pattern, () -> "pattern for integer " + locale);
+                    this.checkEquals(symbols.getPositivePrefix(), positivePrefix, () -> "positivePrefix for integer " + locale);
+                    this.checkEquals(symbols.getPositiveSuffix(), positiveSuffix, () -> "positiveSuffix for integer " + locale);
+                    this.checkEquals(symbols.getRoundingMode(), roundingMode, () -> "roundingMode for integer " + locale);
                 }
             }
 
@@ -874,20 +872,20 @@ public final class DecimalFormatProviderToolTest extends ProviderToolTestCase<De
                 for (final Locale locale : locales) {
                     final DecimalFormat symbols = (DecimalFormat) DecimalFormat.getNumberInstance(locale);
 
-                    assertEquals(symbols.isDecimalSeparatorAlwaysShown(), decimalSeparatorAlwaysShown, () -> "decimalSeparator for number " + locale);
-                    assertEquals(symbols.getGroupingSize(), groupingSize, () -> "groupingSize for number " + locale);
-                    assertEquals(symbols.isGroupingUsed(), groupingUsed, () -> "groupingUsed for number " + locale);
-                    assertEquals(symbols.getMaximumFractionDigits(), maximumFractionDigits, () -> "maximumFractionDigits for number " + locale);
-                    assertEquals(symbols.getMinimumFractionDigits(), minimumFractionDigits, () -> "minimumFractionDigits for number " + locale);
-                    assertEquals(symbols.getMaximumIntegerDigits(), maximumIntegerDigits, () -> "maximumIntegerDigits for number " + locale);
-                    assertEquals(symbols.getMinimumIntegerDigits(), minimumIntegerDigits, () -> "minimumIntegerDigits for number " + locale);
-                    assertEquals(symbols.getMultiplier(), multiplier, () -> "multiplier for number " + locale);
-                    assertEquals(symbols.getNegativePrefix(), negativePrefix, () -> "negativePrefix for number " + locale);
-                    assertEquals(symbols.getNegativeSuffix(), negativeSuffix, () -> "negativeSuffix for number " + locale);
-                    assertEquals(symbols.toPattern(), pattern, () -> "pattern for number " + locale);
-                    assertEquals(symbols.getPositivePrefix(), positivePrefix, () -> "positivePrefix for number " + locale);
-                    assertEquals(symbols.getPositiveSuffix(), positiveSuffix, () -> "positiveSuffix for number " + locale);
-                    assertEquals(symbols.getRoundingMode(), roundingMode, () -> "roundingMode for number " + locale);
+                    this.checkEquals(symbols.isDecimalSeparatorAlwaysShown(), decimalSeparatorAlwaysShown, () -> "decimalSeparator for number " + locale);
+                    this.checkEquals(symbols.getGroupingSize(), groupingSize, () -> "groupingSize for number " + locale);
+                    this.checkEquals(symbols.isGroupingUsed(), groupingUsed, () -> "groupingUsed for number " + locale);
+                    this.checkEquals(symbols.getMaximumFractionDigits(), maximumFractionDigits, () -> "maximumFractionDigits for number " + locale);
+                    this.checkEquals(symbols.getMinimumFractionDigits(), minimumFractionDigits, () -> "minimumFractionDigits for number " + locale);
+                    this.checkEquals(symbols.getMaximumIntegerDigits(), maximumIntegerDigits, () -> "maximumIntegerDigits for number " + locale);
+                    this.checkEquals(symbols.getMinimumIntegerDigits(), minimumIntegerDigits, () -> "minimumIntegerDigits for number " + locale);
+                    this.checkEquals(symbols.getMultiplier(), multiplier, () -> "multiplier for number " + locale);
+                    this.checkEquals(symbols.getNegativePrefix(), negativePrefix, () -> "negativePrefix for number " + locale);
+                    this.checkEquals(symbols.getNegativeSuffix(), negativeSuffix, () -> "negativeSuffix for number " + locale);
+                    this.checkEquals(symbols.toPattern(), pattern, () -> "pattern for number " + locale);
+                    this.checkEquals(symbols.getPositivePrefix(), positivePrefix, () -> "positivePrefix for number " + locale);
+                    this.checkEquals(symbols.getPositiveSuffix(), positiveSuffix, () -> "positiveSuffix for number " + locale);
+                    this.checkEquals(symbols.getRoundingMode(), roundingMode, () -> "roundingMode for number " + locale);
                 }
             }
 
@@ -912,20 +910,20 @@ public final class DecimalFormatProviderToolTest extends ProviderToolTestCase<De
                 for (final Locale locale : locales) {
                     final DecimalFormat symbols = (DecimalFormat) DecimalFormat.getPercentInstance(locale);
 
-                    assertEquals(symbols.isDecimalSeparatorAlwaysShown(), decimalSeparatorAlwaysShown, () -> "decimalSeparator for percent " + locale);
-                    assertEquals(symbols.getGroupingSize(), groupingSize, () -> "groupingSize for percent " + locale);
-                    assertEquals(symbols.isGroupingUsed(), groupingUsed, () -> "groupingUsed for percent " + locale);
-                    assertEquals(symbols.getMaximumFractionDigits(), maximumFractionDigits, () -> "maximumFractionDigits for percent " + locale);
-                    assertEquals(symbols.getMinimumFractionDigits(), minimumFractionDigits, () -> "minimumFractionDigits for percent " + locale);
-                    assertEquals(symbols.getMaximumIntegerDigits(), maximumIntegerDigits, () -> "maximumIntegerDigits for percent " + locale);
-                    assertEquals(symbols.getMinimumIntegerDigits(), minimumIntegerDigits, () -> "minimumIntegerDigits for percent " + locale);
-                    assertEquals(symbols.getMultiplier(), multiplier, () -> "multiplier for percent " + locale);
-                    assertEquals(symbols.getNegativePrefix(), negativePrefix, () -> "negativePrefix for percent " + locale);
-                    assertEquals(symbols.getNegativeSuffix(), negativeSuffix, () -> "negativeSuffix for percent " + locale);
-                    assertEquals(symbols.toPattern(), pattern, () -> "pattern for percent " + locale);
-                    assertEquals(symbols.getPositivePrefix(), positivePrefix, () -> "positivePrefix for percent " + locale);
-                    assertEquals(symbols.getPositiveSuffix(), positiveSuffix, () -> "positiveSuffix for percent " + locale);
-                    assertEquals(symbols.getRoundingMode(), roundingMode, () -> "roundingMode for percent " + locale);
+                    this.checkEquals(symbols.isDecimalSeparatorAlwaysShown(), decimalSeparatorAlwaysShown, () -> "decimalSeparator for percent " + locale);
+                    this.checkEquals(symbols.getGroupingSize(), groupingSize, () -> "groupingSize for percent " + locale);
+                    this.checkEquals(symbols.isGroupingUsed(), groupingUsed, () -> "groupingUsed for percent " + locale);
+                    this.checkEquals(symbols.getMaximumFractionDigits(), maximumFractionDigits, () -> "maximumFractionDigits for percent " + locale);
+                    this.checkEquals(symbols.getMinimumFractionDigits(), minimumFractionDigits, () -> "minimumFractionDigits for percent " + locale);
+                    this.checkEquals(symbols.getMaximumIntegerDigits(), maximumIntegerDigits, () -> "maximumIntegerDigits for percent " + locale);
+                    this.checkEquals(symbols.getMinimumIntegerDigits(), minimumIntegerDigits, () -> "minimumIntegerDigits for percent " + locale);
+                    this.checkEquals(symbols.getMultiplier(), multiplier, () -> "multiplier for percent " + locale);
+                    this.checkEquals(symbols.getNegativePrefix(), negativePrefix, () -> "negativePrefix for percent " + locale);
+                    this.checkEquals(symbols.getNegativeSuffix(), negativeSuffix, () -> "negativeSuffix for percent " + locale);
+                    this.checkEquals(symbols.toPattern(), pattern, () -> "pattern for percent " + locale);
+                    this.checkEquals(symbols.getPositivePrefix(), positivePrefix, () -> "positivePrefix for percent " + locale);
+                    this.checkEquals(symbols.getPositiveSuffix(), positiveSuffix, () -> "positiveSuffix for percent " + locale);
+                    this.checkEquals(symbols.getRoundingMode(), roundingMode, () -> "roundingMode for percent " + locale);
                 }
             }
         }
