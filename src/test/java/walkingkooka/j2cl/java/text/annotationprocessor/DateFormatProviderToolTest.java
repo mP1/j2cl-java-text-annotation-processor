@@ -17,7 +17,6 @@
 
 package walkingkooka.j2cl.java.text.annotationprocessor;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import walkingkooka.NeverError;
 import walkingkooka.j2cl.java.io.string.StringDataInputDataOutput;
@@ -295,7 +294,7 @@ public final class DateFormatProviderToolTest extends ProviderToolTestCase<DateF
             for (int dateStyle : styles()) {
                 final String pattern = data.readUTF();
                 for (final Locale locale : locales) {
-                    assertEquals(DateFormat.getDateInstance(dateStyle, locale),
+                    this.checkEquals(DateFormat.getDateInstance(dateStyle, locale),
                             new SimpleDateFormat(pattern, locale),
                             () -> "getDateInstance " + styleToString(dateStyle) + " " + locale);
                 }
@@ -305,7 +304,7 @@ public final class DateFormatProviderToolTest extends ProviderToolTestCase<DateF
                 for (int timeStyle : styles()) {
                     final String pattern = data.readUTF();
                     for (final Locale locale : locales) {
-                        assertEquals(DateFormat.getDateTimeInstance(dateStyle, timeStyle, locale),
+                        this.checkEquals(DateFormat.getDateTimeInstance(dateStyle, timeStyle, locale),
                                 new SimpleDateFormat(pattern, locale),
                                 () -> "getDateTimeInstance " + styleToString(timeStyle) + " " + styleToString(timeStyle) + " " + locale);
                     }
@@ -315,7 +314,7 @@ public final class DateFormatProviderToolTest extends ProviderToolTestCase<DateF
             for (int timeStyle : styles()) {
                 final String pattern = data.readUTF();
                 for (final Locale locale : locales) {
-                    assertEquals(DateFormat.getTimeInstance(timeStyle, locale),
+                    this.checkEquals(DateFormat.getTimeInstance(timeStyle, locale),
                             new SimpleDateFormat(pattern, locale),
                             () -> "getTimeInstance " + styleToString(timeStyle) + " " + locale);
                 }
@@ -327,23 +326,27 @@ public final class DateFormatProviderToolTest extends ProviderToolTestCase<DateF
         return new int[]{DateFormat.SHORT, DateFormat.MEDIUM, DateFormat.LONG, DateFormat.FULL};
     }
 
-    private static void assertEquals(final DateFormat expected,
-                                     final SimpleDateFormat actual,
-                                     final Supplier<String> message) {
-        assertEquals((SimpleDateFormat) expected,
+    private void checkEquals(final DateFormat expected,
+                             final SimpleDateFormat actual,
+                             final Supplier<String> message) {
+        this.checkEquals((SimpleDateFormat) expected,
                 actual,
                 message);
     }
 
-    private static void assertEquals(final SimpleDateFormat expected,
-                                     final SimpleDateFormat actual,
-                                     final Supplier<String> message) {
-        Assertions.assertEquals(expected.toPattern(),
+    private void checkEquals(final SimpleDateFormat expected,
+                             final SimpleDateFormat actual,
+                             final Supplier<String> message) {
+        this.checkEquals(
+                expected.toPattern(),
                 actual.toPattern(),
-                message);
-        Assertions.assertEquals(expected.getCalendar().getTimeZone(),
+                message
+        );
+        this.checkEquals(
+                expected.getCalendar().getTimeZone(),
                 actual.getCalendar().getTimeZone(),
-                () -> message.get() + " calendar timezone");
+                () -> message.get() + " calendar timezone"
+        );
     }
 
     private static String styleToString(final int style) {

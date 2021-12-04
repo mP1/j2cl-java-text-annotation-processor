@@ -31,8 +31,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class DateFormatSymbolsProviderToolTest extends ProviderToolTestCase<DateFormatSymbolsProviderTool> {
 
     @Test
@@ -118,12 +116,12 @@ public final class DateFormatSymbolsProviderToolTest extends ProviderToolTestCas
 
             for(final Locale locale : locales) {
                 final DateFormatSymbols symbols = DateFormatSymbols.getInstance(locale);
-                assertEquals(ampms, Lists.of(symbols.getAmPmStrings()), () -> "ampms for " + locale);
-                assertEquals(eras, Lists.of(symbols.getEras()), () -> "eras for " + locale);
-                assertEquals(months, Lists.of(symbols.getMonths()), () -> "months for " + locale);
-                assertEquals(shortMonths, Lists.of(symbols.getShortMonths()), () -> "shortMonths for " + locale);
-                assertEquals(shortWeekdays, Lists.of(symbols.getShortWeekdays()), () -> "shortWeekdays for " + locale);
-                assertEquals(weekdays, Lists.of(symbols.getWeekdays()), () -> "weekdays for " + locale);
+                this.checkEquals(ampms, Lists.of(symbols.getAmPmStrings()), () -> "ampms for " + locale);
+                this.checkEquals(eras, Lists.of(symbols.getEras()), () -> "eras for " + locale);
+                this.checkEquals(months, Lists.of(symbols.getMonths()), () -> "months for " + locale);
+                this.checkEquals(shortMonths, Lists.of(symbols.getShortMonths()), () -> "shortMonths for " + locale);
+                this.checkEquals(shortWeekdays, Lists.of(symbols.getShortWeekdays()), () -> "shortWeekdays for " + locale);
+                this.checkEquals(weekdays, Lists.of(symbols.getWeekdays()), () -> "weekdays for " + locale);
             }
         }
     }
