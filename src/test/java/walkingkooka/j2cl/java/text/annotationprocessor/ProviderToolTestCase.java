@@ -54,7 +54,7 @@ public abstract class ProviderToolTestCase<T> implements ClassTesting<T> {
         final StringBuilder data = new StringBuilder();
         final LineEnding eol = LineEnding.NL;
 
-        try (final Printer printer = Printers.sink()) {
+        try (final Printer printer = Printers.sink(LineEnding.NONE)) {
             this.generate0(filter.isEmpty() ? Sets.empty() : WalkingkookaLanguageTag.all(filter),
                     StringDataInputDataOutput.output(data::append),
                     LocaleAwareAnnotationProcessor.comments(printer));
