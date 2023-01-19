@@ -19,11 +19,11 @@ package walkingkooka.j2cl.java.text.generated;
 
 public final class DecimalFormatProvider {
 
-    // constants used by parse.
+  // constants used by parse.
 
-    final static int PARSE_NONE = 0;
-    final static int PARSE_INTEGER_ONLY = 1;
-    final static int PARSE_BIG_DECIMAL = 2;
+  public final static int PARSE_NONE = 0;
+  public final static int PARSE_INTEGER_ONLY = 1;
+  public final static int PARSE_BIG_DECIMAL = 2;
 
   public final static String ANNOTATION_PROCESSOR_LOCALES_FILTER = preventInlining($FILTERED_LOCALES);
 
