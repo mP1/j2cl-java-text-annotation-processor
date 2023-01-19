@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.j2cl.java.text;
+package walkingkooka.j2cl.java.text.generated;
 
 final class DecimalFormatProvider {
 

@@ -47,6 +47,6 @@ public final class DecimalFormatSymbolsProviderAnnotationProcessor extends Local
 
     @Override
     protected String generatedClassName() {
-        return "walkingkooka.j2cl.java.text.DecimalFormatSymbolsProvider";
+        return "walkingkooka.j2cl.java.text.generated.DecimalFormatSymbolsProvider";
     }
 }
