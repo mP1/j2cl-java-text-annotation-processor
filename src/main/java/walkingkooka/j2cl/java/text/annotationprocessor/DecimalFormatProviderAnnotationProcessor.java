@@ -47,6 +47,6 @@ public final class DecimalFormatProviderAnnotationProcessor extends LocaleAwareA
 
     @Override
     protected String generatedClassName() {
-        return "walkingkooka.j2cl.java.text.DecimalFormatProvider";
+        return "walkingkooka.j2cl.java.text.generated.DecimalFormatProvider";
     }
 }
