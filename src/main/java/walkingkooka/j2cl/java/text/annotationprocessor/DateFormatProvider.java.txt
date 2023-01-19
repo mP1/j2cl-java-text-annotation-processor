@@ -17,7 +17,7 @@
 
 package walkingkooka.j2cl.java.text.generated;
 
-final class DateFormatProvider {
+public final class DateFormatProvider {
 
   public final static String ANNOTATION_PROCESSOR_LOCALES_FILTER = preventInlining($FILTERED_LOCALES);
 
