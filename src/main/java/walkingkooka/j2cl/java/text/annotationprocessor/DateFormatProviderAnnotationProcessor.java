@@ -44,9 +44,4 @@ public final class DateFormatProviderAnnotationProcessor extends LocaleAwareAnno
                 dataOutput,
                 comments);
     }
-
-    @Override
-    protected String generatedClassName() {
-        return "walkingkooka.j2cl.java.text.generated.DateFormatProvider";
-    }
 }

@@ -44,9 +44,4 @@ public final class DateFormatSymbolsProviderAnnotationProcessor extends LocaleAw
                 dataOutput,
                 comments);
     }
-
-    @Override
-    protected String generatedClassName() {
-        return "walkingkooka.j2cl.java.text.generated.DateFormatSymbolsProvider";
-    }
 }
