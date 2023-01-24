@@ -23,6 +23,7 @@ import walkingkooka.j2cl.locale.annotationprocessor.LocaleAwareAnnotationProcess
 import walkingkooka.text.printer.IndentingPrinter;
 
 import java.io.DataOutput;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -34,14 +35,22 @@ public final class DateFormatSymbolsProviderAnnotationProcessor extends LocaleAw
     }
 
     @Override
+    protected Optional<String> defaultValue(final Set<String> locales,
+                                            final Function<String, String> options) {
+        return Optional.empty();
+    }
+
+    @Override
     protected String generate(final String filter,
                               final Set<String> locales,
                               final Function<String, String> arguments,
                               final DataOutput dataOutput,
                               final IndentingPrinter comments) throws Exception {
-        return DateFormatSymbolsProviderTool.generate(filter,
+        return DateFormatSymbolsProviderTool.generate(
+                filter,
                 LocaleAwareAnnotationProcessorTool.toLocales(locales),
                 dataOutput,
-                comments);
+                comments
+        );
     }
 }
