@@ -20,7 +20,7 @@ package walkingkooka.j2cl.java.text.annotationprocessor;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
-import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.j2cl.java.io.string.StringDataInputDataOutput;
 import walkingkooka.j2cl.java.util.locale.support.LocaleSupport;
 import walkingkooka.j2cl.locale.WalkingkookaLanguageTag;
@@ -90,7 +90,7 @@ public final class DecimalFormatProviderTool {
 
             Set<Locale> formatLocales = formatsToLocales.get(formats);
             if (null == formatLocales) {
-                formatLocales = Sets.sorted(LocaleAwareAnnotationProcessorTool.LOCALE_COMPARATOR);
+                formatLocales = SortedSets.tree(LocaleAwareAnnotationProcessorTool.LOCALE_COMPARATOR);
                 formatsToLocales.put(formats, formatLocales);
             }
             formatLocales.add(locale);
