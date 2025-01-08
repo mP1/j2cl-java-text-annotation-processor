@@ -102,7 +102,7 @@ public final class DateFormatSymbolsProviderToolTest extends ProviderToolTestCas
 // shortMonths=luukao kemã, ɓandaɓu, vɔɔ, fulu, goo, 6, 7, kɔnde, saah, galo, kenpkato ɓololɔ, luukao lɔma,
 // shortWeekdays=lahadi, tɛɛnɛɛ, talata, alaba, aimisa, aijima, siɓiti
 // weekdays=lahadi, tɛɛnɛɛ, talata, alaba, aimisa, aijima, siɓiti
-        for(int i = 0; i < count; i++) {
+        for (int i = 0; i < count; i++) {
             final Set<Locale> locales = this.readLocales(data);
             final List<String> ampms = this.readStrings(data);
             final List<String> eras = this.readStrings(data);
@@ -114,7 +114,7 @@ public final class DateFormatSymbolsProviderToolTest extends ProviderToolTestCas
             shortWeekdays.add(0, "");
             weekdays.add(0, "");
 
-            for(final Locale locale : locales) {
+            for (final Locale locale : locales) {
                 final DateFormatSymbols symbols = DateFormatSymbols.getInstance(locale);
                 this.checkEquals(ampms, Lists.of(symbols.getAmPmStrings()), () -> "ampms for " + locale);
                 this.checkEquals(eras, Lists.of(symbols.getEras()), () -> "eras for " + locale);
