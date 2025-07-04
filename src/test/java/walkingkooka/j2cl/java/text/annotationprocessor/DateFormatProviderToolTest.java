@@ -130,7 +130,8 @@ public final class DateFormatProviderToolTest extends ProviderToolTestCase<DateF
 
     @Test
     public void testFRFR() throws IOException {
-        this.generateAndCheck("fr-FR",
+        this.generateAndCheck(
+                "fr-FR",
                 "// locales=fr-FR\n" +
                         "// \n" +
                         "//   DateInstance SHORT pattern=dd/MM/y\n" +
@@ -171,26 +172,26 @@ public final class DateFormatProviderToolTest extends ProviderToolTestCase<DateF
                         "//   DateInstance MEDIUM pattern=d MMM y\n" +
                         "//   DateInstance LONG pattern=d MMMM y\n" +
                         "//   DateInstance FULL pattern=EEEE d MMMM y\n" +
-                        "//   DateTimeInstance SHORT, SHORT pattern=yy-MM-dd HH:mm\n" +
-                        "//   DateTimeInstance SHORT, MEDIUM pattern=yy-MM-dd HH:mm:ss\n" +
-                        "//   DateTimeInstance SHORT, LONG pattern=yy-MM-dd HH:mm:ss z\n" +
-                        "//   DateTimeInstance SHORT, FULL pattern=yy-MM-dd HH:mm:ss zzzz\n" +
-                        "//   DateTimeInstance MEDIUM, SHORT pattern=d MMM y HH:mm\n" +
-                        "//   DateTimeInstance MEDIUM, MEDIUM pattern=d MMM y HH:mm:ss\n" +
-                        "//   DateTimeInstance MEDIUM, LONG pattern=d MMM y HH:mm:ss z\n" +
-                        "//   DateTimeInstance MEDIUM, FULL pattern=d MMM y HH:mm:ss zzzz\n" +
-                        "//   DateTimeInstance LONG, SHORT pattern=d MMMM y HH:mm\n" +
-                        "//   DateTimeInstance LONG, MEDIUM pattern=d MMMM y HH:mm:ss\n" +
-                        "//   DateTimeInstance LONG, LONG pattern=d MMMM y 'à' HH:mm:ss z\n" +
-                        "//   DateTimeInstance LONG, FULL pattern=d MMMM y 'à' HH:mm:ss zzzz\n" +
-                        "//   DateTimeInstance FULL, SHORT pattern=EEEE d MMMM y HH:mm\n" +
-                        "//   DateTimeInstance FULL, MEDIUM pattern=EEEE d MMMM y HH:mm:ss\n" +
-                        "//   DateTimeInstance FULL, LONG pattern=EEEE d MMMM y 'à' HH:mm:ss z\n" +
-                        "//   DateTimeInstance FULL, FULL pattern=EEEE d MMMM y 'à' HH:mm:ss zzzz\n" +
-                        "//   TimeInstance SHORT pattern=HH:mm\n" +
-                        "//   TimeInstance MEDIUM pattern=HH:mm:ss\n" +
-                        "//   TimeInstance LONG pattern=HH:mm:ss z\n" +
-                        "//   TimeInstance FULL pattern=HH:mm:ss zzzz\n" +
+                        "//   DateTimeInstance SHORT, SHORT pattern=yy-MM-dd HH 'h' mm\n" +
+                        "//   DateTimeInstance SHORT, MEDIUM pattern=yy-MM-dd HH 'h' mm 'min' ss 's'\n" +
+                        "//   DateTimeInstance SHORT, LONG pattern=yy-MM-dd HH 'h' mm 'min' ss 's' z\n" +
+                        "//   DateTimeInstance SHORT, FULL pattern=yy-MM-dd HH 'h' mm 'min' ss 's' zzzz\n" +
+                        "//   DateTimeInstance MEDIUM, SHORT pattern=d MMM y HH 'h' mm\n" +
+                        "//   DateTimeInstance MEDIUM, MEDIUM pattern=d MMM y HH 'h' mm 'min' ss 's'\n" +
+                        "//   DateTimeInstance MEDIUM, LONG pattern=d MMM y HH 'h' mm 'min' ss 's' z\n" +
+                        "//   DateTimeInstance MEDIUM, FULL pattern=d MMM y HH 'h' mm 'min' ss 's' zzzz\n" +
+                        "//   DateTimeInstance LONG, SHORT pattern=d MMMM y HH 'h' mm\n" +
+                        "//   DateTimeInstance LONG, MEDIUM pattern=d MMMM y HH 'h' mm 'min' ss 's'\n" +
+                        "//   DateTimeInstance LONG, LONG pattern=d MMMM y 'à' HH 'h' mm 'min' ss 's' z\n" +
+                        "//   DateTimeInstance LONG, FULL pattern=d MMMM y 'à' HH 'h' mm 'min' ss 's' zzzz\n" +
+                        "//   DateTimeInstance FULL, SHORT pattern=EEEE d MMMM y HH 'h' mm\n" +
+                        "//   DateTimeInstance FULL, MEDIUM pattern=EEEE d MMMM y HH 'h' mm 'min' ss 's'\n" +
+                        "//   DateTimeInstance FULL, LONG pattern=EEEE d MMMM y 'à' HH 'h' mm 'min' ss 's' z\n" +
+                        "//   DateTimeInstance FULL, FULL pattern=EEEE d MMMM y 'à' HH 'h' mm 'min' ss 's' zzzz\n" +
+                        "//   TimeInstance SHORT pattern=HH 'h' mm\n" +
+                        "//   TimeInstance MEDIUM pattern=HH 'h' mm 'min' ss 's'\n" +
+                        "//   TimeInstance LONG pattern=HH 'h' mm 'min' ss 's' z\n" +
+                        "//   TimeInstance FULL pattern=HH 'h' mm 'min' ss 's' zzzz\n" +
                         "// locales=fr-FR\n" +
                         "// \n" +
                         "//   DateInstance SHORT pattern=dd/MM/y\n" +
@@ -219,7 +220,8 @@ public final class DateFormatProviderToolTest extends ProviderToolTestCase<DateF
                         "//   TimeInstance FULL pattern=HH:mm:ss zzzz\n" +
                         "\n" +
                         "\n" +
-                        "2,1,fr-CA,yy-MM-dd,d MMM y,d MMMM y,EEEE d MMMM y,yy-MM-dd HH:mm,yy-MM-dd HH:mm:ss,yy-MM-dd HH:mm:ss z,yy-MM-dd HH:mm:ss zzzz,d MMM y HH:mm,d MMM y HH:mm:ss,d MMM y HH:mm:ss z,d MMM y HH:mm:ss zzzz,d MMMM y HH:mm,d MMMM y HH:mm:ss,d MMMM y 'à' HH:mm:ss z,d MMMM y 'à' HH:mm:ss zzzz,EEEE d MMMM y HH:mm,EEEE d MMMM y HH:mm:ss,EEEE d MMMM y 'à' HH:mm:ss z,EEEE d MMMM y 'à' HH:mm:ss zzzz,HH:mm,HH:mm:ss,HH:mm:ss z,HH:mm:ss zzzz,1,fr-FR,dd/MM/y,d MMM y,d MMMM y,EEEE d MMMM y,dd/MM/y HH:mm,dd/MM/y HH:mm:ss,dd/MM/y HH:mm:ss z,dd/MM/y HH:mm:ss zzzz,d MMM y HH:mm,d MMM y 'à' HH:mm:ss,d MMM y 'à' HH:mm:ss z,d MMM y 'à' HH:mm:ss zzzz,d MMMM y HH:mm,d MMMM y 'à' HH:mm:ss,d MMMM y 'à' HH:mm:ss z,d MMMM y 'à' HH:mm:ss zzzz,EEEE d MMMM y HH:mm,EEEE d MMMM y 'à' HH:mm:ss,EEEE d MMMM y 'à' HH:mm:ss z,EEEE d MMMM y 'à' HH:mm:ss zzzz,HH:mm,HH:mm:ss,HH:mm:ss z,HH:mm:ss zzzz");
+                        "2,1,fr-CA,yy-MM-dd,d MMM y,d MMMM y,EEEE d MMMM y,yy-MM-dd HH 'h' mm,yy-MM-dd HH 'h' mm 'min' ss 's',yy-MM-dd HH 'h' mm 'min' ss 's' z,yy-MM-dd HH 'h' mm 'min' ss 's' zzzz,d MMM y HH 'h' mm,d MMM y HH 'h' mm 'min' ss 's',d MMM y HH 'h' mm 'min' ss 's' z,d MMM y HH 'h' mm 'min' ss 's' zzzz,d MMMM y HH 'h' mm,d MMMM y HH 'h' mm 'min' ss 's',d MMMM y 'à' HH 'h' mm 'min' ss 's' z,d MMMM y 'à' HH 'h' mm 'min' ss 's' zzzz,EEEE d MMMM y HH 'h' mm,EEEE d MMMM y HH 'h' mm 'min' ss 's',EEEE d MMMM y 'à' HH 'h' mm 'min' ss 's' z,EEEE d MMMM y 'à' HH 'h' mm 'min' ss 's' zzzz,HH 'h' mm,HH 'h' mm 'min' ss 's',HH 'h' mm 'min' ss 's' z,HH 'h' mm 'min' ss 's' zzzz,1,fr-FR,dd/MM/y,d MMM y,d MMMM y,EEEE d MMMM y,dd/MM/y HH:mm,dd/MM/y HH:mm:ss,dd/MM/y HH:mm:ss z,dd/MM/y HH:mm:ss zzzz,d MMM y HH:mm,d MMM y 'à' HH:mm:ss,d MMM y 'à' HH:mm:ss z,d MMM y 'à' HH:mm:ss zzzz,d MMMM y HH:mm,d MMMM y 'à' HH:mm:ss,d MMMM y 'à' HH:mm:ss z,d MMMM y 'à' HH:mm:ss zzzz,EEEE d MMMM y HH:mm,EEEE d MMMM y 'à' HH:mm:ss,EEEE d MMMM y 'à' HH:mm:ss z,EEEE d MMMM y 'à' HH:mm:ss zzzz,HH:mm,HH:mm:ss,HH:mm:ss z,HH:mm:ss zzzz"
+        );
     }
 
     @Test
