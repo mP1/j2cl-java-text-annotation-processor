@@ -5,8 +5,6 @@
 ![](https://tokei.rs/b1/github/mP1/j2cl-java-text-annotation-processor)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/mP1/j2cl-java-text-annotation-processor.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/mP1/j2cl-java-text-annotation-processor/alerts/)
 
-
-
 # j2cl java-text-annotation-processor
 
 Contains several annotation processor that each generate a provider for a JRE class. All processors only generate
@@ -24,7 +22,6 @@ for the selected Locales.
 - [DecimalFormatSymbolsProviderAnnotationProcessor](https://github.com/mP1/j2cl-java-text-annotation-processor/blob/master/src/main/java/walkingkooka/j2cl/java/text/annotationprocessor/DecimalFormatSymbolsProviderAnnotationProcessor.java)
   generates a `DecimalFormatSymbolsProvider` used by
   [DecimalFormatSymbols](https://github.com/mP1/j2cl-java-text/blob/master/src/main/java/walkingkooka/j2cl/java/text/DecimalFormatSymbols.java). Holds all selected format patterns. 
-
 
 To select which locales are included set the `walkingkooka.j2cl.java.util.Locale` annotation processor argument.
 
